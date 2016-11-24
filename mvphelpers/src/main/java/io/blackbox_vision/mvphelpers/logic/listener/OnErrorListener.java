@@ -1,4 +1,4 @@
-package io.blackbox_vision.mvphelpers.logic.listener.listener;
+package io.blackbox_vision.mvphelpers.logic.listener;
 
 import android.support.annotation.NonNull;
 

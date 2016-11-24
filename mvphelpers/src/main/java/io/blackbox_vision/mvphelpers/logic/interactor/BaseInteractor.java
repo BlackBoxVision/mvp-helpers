@@ -24,4 +24,3 @@ public class BaseInteractor {
         handler.post(runnable);
     }
 }
-
