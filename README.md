@@ -89,7 +89,7 @@ Check the following example:
 //This example uses Java 8 features, I assume the usage of retrolambda
 public final class DetailsInteractor extends BaseInteractor {
 
-  public void retrieveDetailsFromService(@NonNull String id, @NonNull SuccessListener<Bundle> successListener, @NonNull ErrorListener<String> errorListener) {
+  public void retrieveDetailsFromService(@NonNull final String id, @NonNull final OnSuccessListener<Bundle> successListener, @NonNull final OnErrorListener<String> errorListener) {
     runOnBackground(() -> {
       //Getting data from somewhere
       Bundle data = ... ;   
