@@ -141,6 +141,8 @@ As you see, **BasePresenter** is a generic class, you have to pass to it the **V
 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
 
+## Complement with Android 
+
 Well, that's the basics behind the library. At this point, you are asking yourself, how do I connect this classes with a Android. Well, that's pretty simple! 
 
 I work a lot with **Fragments**, they simplify a lot my work flow. I think in them as the **View** in Android. I let Activity manage Fragments, don't want to charge them, since they have a lot of responsabilities. 
@@ -177,4 +179,28 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
        Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 } 
+```
+This fragment is a generic class that solves some troubles for you, It has the ability to detach view for you in onDestroyView so you don't have to, auto inject views with butter knife, and lifecycle simplified. 
+
+When you inherit it, you will get the following methods:
+
+- **addPresenter** → When you inherit BaseFragment you get this method to implement, here you have to create you instance of Presenter. 
+
+- **getLayout** → When you inherit BaseFragment you get this method to implement, here you have pass the id reference to the layout. This library comes with ButterKnife, to provide efficiency I have implemented onCreateView in BaseFragment where I call ButterKnife.bind method, so you have view binding out of the box! :smile:
+
+- **getPresenter** → simple getter, to make your access to the presenter more cleaner.
+
+#License
+
+This library is distributed under **MIT License**.
+
+```
+The MIT License (MIT)
+Copyright (c) 2016 BlackBox Vision
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
