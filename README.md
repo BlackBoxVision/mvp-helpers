@@ -1,13 +1,13 @@
 #MVP Helpers
 
-Aftter digging a lot of time with Apps under MVP pattern, I started to see classes that could be abstracted in a simpler way in order to use them to build Apps more faster.
+Aftter digging a lot of time with Apps under **MVP pattern**, I started to see classes that could be abstracted in a simpler way in order to use them to build Apps more faster.
 This library is intended to provide helpers classes, I don't want to build a robust library because what I love from Android, is the ability to use the patterns you want to create a determinated set of apps.
 
 If you are using MVP, this set of classes could help you a little bit. 
 
 ##Installation 
 
-Actually I don't have this library in jcenter/maven central, so if you want to use, follow this instructions to get everything work: 
+Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow this instructions to get everything work: 
 
 **Gradle Installation**
 
