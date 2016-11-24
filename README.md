@@ -194,6 +194,14 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 } 
 ```
 
+#Issues 
+
+If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). ´I will do the best to fix it, or help you. 
+
+#Contributing
+
+Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, **PRs are welcome!**
+
 #License
 
 This library is distributed under **MIT License**.
