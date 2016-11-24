@@ -154,9 +154,9 @@ This Fragment is a **generic** class that solves some troubles for you, **It has
 
 When you inherit it, you will get the following methods to implement:
 
-- **addPresenter** → When you inherit BaseFragment you get this method to implement, here you have to create you instance of Presenter. 
+- **addPresenter** → in this method you have to create you instance of Presenter. 
 
-- **getLayout** → When you inherit BaseFragment you get this method to implement, here you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
+- **getLayout** → in this method you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 
