@@ -196,7 +196,7 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 
 #Issues 
 
-If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). ´I will do the best to fix it, or help you. 
+If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). I will do the best to fix it, or help you. 
 
 #Contributing
 
