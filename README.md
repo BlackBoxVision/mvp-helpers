@@ -24,7 +24,7 @@ allprojects {
 - Add the dependency:
 ```gradle
 dependencies {
-	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.2'
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.3'
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 <dependency>
   <groupId>com.github.BlackBoxVision</groupId>
   <artifactId>mvp-helpers</artifactId>
-	<version>v0.0.2</version>
+	<version>v0.0.3</version>
 </dependency>
 ```
 
@@ -57,7 +57,7 @@ dependencies {
 
 - Add the dependency:
 ```sbt
-  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.2"	
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.3"	
 ```
 
 ##Usage
