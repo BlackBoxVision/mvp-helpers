@@ -150,16 +150,6 @@ Well, that's the basics behind the library. At this point, you are asking yourse
 
 I work a lot with **Fragments**, they simplify a lot my work flow. I think in them as the **View** in Android. I let Activity manage Fragments, don't want to charge them, since they have a lot of responsabilities. 
 
-This Fragment is a **generic** class that solves some troubles for you, **It has the ability to detach view for you in onDestroyView so you don't have to, auto inject views with butter knife, and lifecycle simplified**. 
-
-When you inherit it, you will get the following methods to implement:
-
-- **addPresenter** → in this method you have to create you instance of Presenter. 
-
-- **getLayout** → in this method you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
-
-- **getPresenter** → simple getter, to make your access to the presenter more cleaner.
-
 To finalize the explanation, check the sample implementation: 
 
 ```java
@@ -193,6 +183,24 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     }
 } 
 ```
+
+As you see, this Fragment is a **generic** class that solves some troubles for you, **It has the ability to detach view for you in onDestroyView so you don't have to, auto inject views with butter knife, and lifecycle methods simplified**. 
+
+When you inherit it, you will get the following methods to implement:
+
+- **addPresenter** → in this method you have to create you instance of Presenter. 
+
+- **getLayout** → in this method you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
+
+- **getPresenter** → simple getter, to make your access to the presenter more cleaner.
+
+#Issues 
+
+If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). I will do the best to fix it, or help you. 
+
+#Contributing
+
+Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, **PRs are welcome!**
 
 #License
 
