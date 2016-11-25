@@ -194,6 +194,16 @@ When you inherit it, you will get the following methods to implement:
 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 
+#Some notes on ButterKnife
+
+The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
+
+```gradle
+dependencies {
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+}
+```
+
 #Issues 
 
 If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). I will do the best to fix it, or help you. 
