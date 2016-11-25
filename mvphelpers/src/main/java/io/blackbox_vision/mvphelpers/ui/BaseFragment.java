@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
+
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     protected Unbinder unbinder;
     protected T presenter;
@@ -32,20 +33,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         presenter.detachView();
+        unbinder.unbind();
     }
 
     @NonNull

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
+
+import butterknife.BindView;
 
 import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.util.MockUtils;
@@ -14,6 +18,9 @@ import io.blackbox_vision.mvphelpers.ui.BaseFragment;
 
 
 public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
+
+    @BindView(R.id.sample_button)
+    Button button;
 
     @NonNull
     @Override
@@ -28,10 +35,15 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        button.setOnClickListener((v) -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getPresenter().registerView(this);
-        getPresenter().findRequiredInformation(MockUtils.SAMPLE);
     }
 
     @Override

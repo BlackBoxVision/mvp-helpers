@@ -1,7 +1,8 @@
 package io.blackbox_vision.mvphelpers.utils;
 
+
 public final class Preconditions {
-    public Preconditions() { }
+    private Preconditions() { }
 
     public static <T> T checkNotNull(T reference, Object errorMessage) {
         if(reference == null) {

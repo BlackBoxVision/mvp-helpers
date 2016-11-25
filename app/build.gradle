@@ -20,6 +20,7 @@ android {
     }
     lintOptions {
         disable "InvalidPackage"
+        abortOnError true
     }
     packagingOptions {
         exclude "META-INF/services/javax.annotation.processing.Processor"
@@ -35,13 +36,16 @@ retrolambda {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':mvphelpers')
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
-    testCompile 'junit:junit:4.12'
 
-    compile project(':mvphelpers')
+    testCompile 'junit:junit:4.12'
 }

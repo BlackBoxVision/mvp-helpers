@@ -1,9 +1,9 @@
 package io.blackbox_vision.mvphelpers.logic.presenter;
 
-
 import android.support.annotation.NonNull;
 
 import io.blackbox_vision.mvphelpers.logic.view.BaseView;
+
 
 public class BasePresenter<T extends BaseView> {
     private T view;

@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 
 import io.blackbox_vision.mvphelpers.utils.Preconditions;
 
+
 public class BaseInteractor {
     private Executor executor = Executors.newFixedThreadPool(5);
     private Handler handler = new Handler(Looper.getMainLooper());

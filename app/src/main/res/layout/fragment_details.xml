@@ -2,4 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.blackbox_vision.helpers.ui.fragment.DetailsFragment"/>
+    tools:context="io.blackbox_vision.helpers.ui.fragment.DetailsFragment">
+
+    <Button
+        android:text="¡Click me!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/sample_button" />
+
+</FrameLayout>
