@@ -144,7 +144,7 @@ As you see, **BasePresenter** is a generic class, you have to pass to it the **V
 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
 
-## Complement with Android 
+##Complement with Android 
 
 Well, that's the basics behind the library. At this point, you are asking yourself, how do I connect this classes with a Android??. Well, that's pretty simple! 
 
@@ -194,7 +194,7 @@ When you inherit it, you will get the following methods to implement:
 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 
-#Some notes on ButterKnife
+##Some notes on ButterKnife
 
 The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
 
@@ -204,15 +204,15 @@ dependencies {
 }
 ```
 
-#Issues 
+##Issues 
 
 If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). I will do the best to fix it, or help you. 
 
-#Contributing
+##Contributing
 
 Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, **PRs are welcome!**
 
-#License
+##License
 
 This library is distributed under **MIT License**.
 
