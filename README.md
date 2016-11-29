@@ -1,4 +1,4 @@
-#MVP Helpers
+<img src="https://github.com/BlackBoxVision/mvp-helpers/blob/master/assets/logo.png" width="400px" height="155px">
 > Helper classes to build Android Apps through MVP pattern in a faster way
 
 After working about 3 years with Android development, I learn a lot from the different projects I have made, a lot of mistakes, and a lot of lessons learned. About 1 year ago, or more, in Android, MVP become the selected pattern to make Android Apps. MVP makes your apps code more easier to follow, and also easier to reason. 
