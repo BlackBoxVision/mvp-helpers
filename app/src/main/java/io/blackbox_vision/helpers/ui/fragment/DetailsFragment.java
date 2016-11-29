@@ -25,7 +25,7 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button.setOnClickListener((v) -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
+        button.setOnClickListener(v -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
     }
 
     @NonNull
