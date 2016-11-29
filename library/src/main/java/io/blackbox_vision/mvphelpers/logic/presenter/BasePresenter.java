@@ -12,7 +12,7 @@ public class BasePresenter<T extends BaseView> {
         return this.view != null;
     }
 
-    public void registerView(@NonNull T view) {
+    public void attachView(@NonNull T view) {
         this.view = view;
     }
 

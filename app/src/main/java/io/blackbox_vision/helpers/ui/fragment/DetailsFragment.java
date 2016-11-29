@@ -14,13 +14,19 @@ import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.util.MockUtils;
 import io.blackbox_vision.helpers.logic.presenter.DetailsPresenter;
 import io.blackbox_vision.helpers.logic.view.DetailsView;
-import io.blackbox_vision.mvphelpers.ui.BaseFragment;
+import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
 
 public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
 
     @BindView(R.id.sample_button)
     Button button;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        button.setOnClickListener((v) -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
+    }
 
     @NonNull
     @Override
@@ -35,15 +41,8 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        button.setOnClickListener((v) -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getPresenter().registerView(this);
+    public void onPresenterCreated(@NonNull DetailsPresenter presenter) {
+        presenter.attachView(this);
     }
 
     @Override
