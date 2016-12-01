@@ -23,7 +23,8 @@ env:
     - ANDROID_TARGET=android-13  ANDROID_ABI=armeabi-v7a
     - ANDROID_TARGET=android-12  ANDROID_ABI=armeabi-v7a
     - ANDROID_TARGET=android-11  ANDROID_ABI=armeabi-v7a
-
+    - ANDROID_TARGET=android-10  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-9  ANDROID_ABI=armeabi-v7a
 
 android:
   components:
@@ -48,6 +49,8 @@ android:
     - android-13
     - android-12
     - android-11
+    - android-10
+    - android-9
     - sys-img-armeabi-v7a-android-25
     - sys-img-armeabi-v7a-android-24
     - sys-img-armeabi-v7a-android-23
@@ -63,6 +66,8 @@ android:
     - sys-img-armeabi-v7a-android-13
     - sys-img-armeabi-v7a-android-12
     - sys-img-armeabi-v7a-android-11
+    - sys-img-armeabi-v7a-android-10
+    - sys-img-armeabi-v7a-android-9
 
 before_script:
   - chmod +x gradlew
