@@ -7,9 +7,11 @@ This library, exposes a minimal API that I have abstracted during many projects.
 
 Check the following instructions under this **README** in order to get a project up and running with this simpler library.
 
-##Installation 
+##Installation
 
-Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow this instructions to get everything work: 
+Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. 
+
+###Java version  
 
 **Gradle**
 
@@ -62,6 +64,59 @@ dependencies {
 - Add the dependency:
 ```sbt
   libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.1.0"	
+```
+
+###Kotlin version
+
+- Add it in your root build.gradle at the end of repositories:
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { 
+			url "https://jitpack.io" 
+		}
+	}
+}
+```
+
+- Add the dependency:
+```gradle
+dependencies {
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.1-kt'
+}
+```
+
+**Maven**
+
+- Add this line to repositories section in pom.xml:
+```xml
+<repositories>
+	<repository>
+	   <id>jitpack.io</id>
+		 <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+- Add the dependency:
+```xml
+<dependency>
+  <groupId>com.github.BlackBoxVision</groupId>
+  <artifactId>mvp-helpers</artifactId>
+	<version>v0.0.1-kt</version>
+</dependency>
+```
+
+**SBT**
+
+- Add it in your build.sbt at the end of resolvers:
+```sbt
+  resolvers += "jitpack" at "https://jitpack.io"
+```
+
+- Add the dependency:
+```sbt
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.1-kt"	
 ```
 
 ##Usage example
@@ -227,6 +282,8 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
+* **JAVA**
+
 * **0.1.0** 
   * **CHANGE**: Folder refactor under **UI package**
   * **CHANGE**: Modified **BasePresenter** method **registerView** to **attachView** in order to get more consistence
@@ -237,6 +294,11 @@ Of course, if you see something that you want to upgrade from this library, or a
   * **CHANGE**: Rename **mvphelper** library to library
 * **0.0.2**
   * **CHANGE**: Minor updates
+* **0.0.1**
+  * Work in progress
+
+* **KOTLIN**
+
 * **0.0.1**
   * Work in progress
 
