@@ -18,7 +18,9 @@ Actually I don't have this library in **JCenter/Maven Central**, so if you want 
 allprojects {
 	repositories {
 		...
-		maven { url "https://jitpack.io" }
+		maven { 
+			url "https://jitpack.io" 
+		}
 	}
 }
 ```
@@ -26,7 +28,7 @@ allprojects {
 - Add the dependency:
 ```gradle
 dependencies {
-	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.3'
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.1.0'
 }
 ```
 
@@ -46,7 +48,7 @@ dependencies {
 <dependency>
   <groupId>com.github.BlackBoxVision</groupId>
   <artifactId>mvp-helpers</artifactId>
-	<version>v0.0.3</version>
+	<version>v0.1.0</version>
 </dependency>
 ```
 
@@ -59,7 +61,7 @@ dependencies {
 
 - Add the dependency:
 ```sbt
-  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.3"	
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.1.0"	
 ```
 
 ##Usage example
@@ -158,22 +160,27 @@ To finalize the explanation, check the sample implementation:
 
 ```java
 public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
+    
     @Override
     public addPresenter() {
-      return new DetailsPresenter();
+      	return new DetailsPresenter();
     }
     
     @LayoutRes
     @Override
     public int getLayout() {
-      return R.layout.fragment_details;
+      	return R.layout.fragment_details;
+    }
+    
+    @Override
+    void onPresenterCreated(@NonNull DetailsPresenter presenter) {
+    	presenter.attachView(this);
     }
     
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getPresenter.registerView(this);
-        getPresenter.getInformationFromId("ssdWRGD132");
+        getPresenter().getInformationFromId("ssdWRGD132");
     }
     
     @Override
@@ -198,6 +205,8 @@ When you inherit it, you will get the following methods to implement:
 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 
+- **onPresenterCreated** → In this method you should attach the view to the presenter in order to start working.
+
 ##Some notes on ButterKnife
 
 The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
@@ -218,6 +227,11 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
+* 0.1.0 
+  * CHANGE: Folder refactor under UI package
+  * CHANGE: Modified BasePresenter method registerView to attachView in order to get more consistence
+  * CHANGE: Added new runOnBackground version in BaseInteractor that uses a ScheduledExecutorService and also cancel method to stop execution
+  * CHANGE: Added Custom Views to extend BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout
 * 0.0.3
   * CHANGE: Removed ButterKnife annotation processor	
   * CHANGE: Rename mvphelpers library to library
