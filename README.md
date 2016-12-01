@@ -228,15 +228,15 @@ Of course, if you see something that you want to upgrade from this library, or a
 ##Release History
 
 * 0.1.0 
-  * CHANGE: Folder refactor under UI package
-  * CHANGE: Modified BasePresenter method registerView to attachView in order to get more consistence
-  * CHANGE: Added new runOnBackground version in BaseInteractor that uses a ScheduledExecutorService and also cancel method to stop execution
-  * CHANGE: Added Custom Views to extend BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout
+  * **CHANGE**: Folder refactor under **UI package**
+  * **CHANGE**: Modified **BasePresenter** method **registerView** to **attachView** in order to get more consistence
+  * **CHANGE**: Added new **runOnBackground** version in **BaseInteractor** that uses a ScheduledExecutorService and also cancel method to stop execution
+  * **CHANGE**: Added Custom Views to extend **BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout**
 * 0.0.3
-  * CHANGE: Removed ButterKnife annotation processor	
-  * CHANGE: Rename mvphelpers library to library
+  * **CHANGE**: Removed **ButterKnife** annotation processor	
+  * **CHANGE**: Rename **mvphelper** library to library
 * 0.0.2
-  * CHANGE: Minor updates
+  * **CHANGE**: Minor updates
 * 0.0.1
   * Work in progress
 
