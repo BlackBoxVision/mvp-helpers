@@ -282,7 +282,7 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
-* **JAVA**
+###**JAVA**
 
 * **0.1.0** 
   * **CHANGE**: Folder refactor under **UI package**
@@ -297,9 +297,9 @@ Of course, if you see something that you want to upgrade from this library, or a
 * **0.0.1**
   * Work in progress
 
-* **KOTLIN**
+###**KOTLIN**
 
-* **0.0.1**
+**0.0.1**
   * Work in progress
 
 ##License
