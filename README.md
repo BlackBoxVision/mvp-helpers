@@ -146,7 +146,7 @@ As you see, **BasePresenter** is a generic class, you have to pass to it the **V
 
 - **detachView** → This method dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
 
-- **registerView** → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
+- **attachView** → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
 
