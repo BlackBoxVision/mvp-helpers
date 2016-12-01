@@ -88,7 +88,7 @@
                 </ul>
 
                 <div class="highlight highlight-source-groovy-gradle mdl-color--grey-50"><pre><span class="pl-en">dependencies</span> {
-     compile <span class="pl-s"><span class="pl-pds">'</span>com.github.BlackBoxVision:mvp-helpers:v0.0.3<span class="pl-pds">'</span></span>
+     compile <span class="pl-s"><span class="pl-pds">'</span>com.github.BlackBoxVision:mvp-helpers:v0.1.0<span class="pl-pds">'</span></span>
 }</pre></div>
 
                 <p><strong>Maven</strong></p>
@@ -111,7 +111,7 @@
                 <div class="highlight highlight-text-xml mdl-color--grey-50"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
   &lt;<span class="pl-ent">groupId</span>&gt;com.github.BlackBoxVision&lt;/<span class="pl-ent">groupId</span>&gt;
   &lt;<span class="pl-ent">artifactId</span>&gt;mvp-helpers&lt;/<span class="pl-ent">artifactId</span>&gt;
-    &lt;<span class="pl-ent">version</span>&gt;v0.0.3&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;v0.1.0&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
 
                 <p><strong>SBT</strong></p>
@@ -126,7 +126,7 @@
                     <li>Add the dependency:</li>
                 </ul>
 
-                <div class="highlight highlight-source-scala mdl-color--grey-50"><pre>  libraryDependencies <span class="pl-k">+</span><span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>com.github.BlackBoxVision<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>mvp-helpers<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>v0.0.3<span class="pl-pds">"</span></span> </pre></div>
+                <div class="highlight highlight-source-scala mdl-color--grey-50"><pre>  libraryDependencies <span class="pl-k">+</span><span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>com.github.BlackBoxVision<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>mvp-helpers<span class="pl-pds">"</span></span> <span class="pl-k">%</span> <span class="pl-s"><span class="pl-pds">"</span>v0.1.0<span class="pl-pds">"</span></span> </pre></div>
 
                 <h4>Usage Example</h4>
                 <p>The usage is really simple, the concepts behind this library are the following ones: </p>
@@ -211,7 +211,7 @@
                 <ul>
                     <li><p><strong>isViewAttached</strong> → This method checks if you have set the view to the presenter, returns to you a boolean value that you should handle in your presenter implementation. </p></li>
                     <li><p><strong>detachView</strong> → This method dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. </p></li>
-                    <li><p><strong>registerView</strong> → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.</p></li>
+                    <li><p><strong>attachView</strong> → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.</p></li>
                     <li><p><strong>getView</strong> → simple getter, to make your access to the view defined more cleaner.</p></li>
                 </ul>
 
@@ -223,6 +223,7 @@
                 <p>To finalize the explanation, check the sample implementation: </p>
 
                 <div class="highlight highlight-source-java mdl-color--grey-50"><pre><span class="pl-k">public</span> <span class="pl-k">final</span> <span class="pl-k">class</span> <span class="pl-en">DetailsFragment</span> <span class="pl-k">extends</span> <span class="pl-e">BaseFragment&lt;<span class="pl-smi">DetailsPresenter</span>&gt;</span> <span class="pl-k">implements</span> <span class="pl-e">DetailsView</span> {
+
     <span class="pl-k">@Override</span>
     <span class="pl-k">public</span> <span class="pl-en">addPresenter</span>() {
       <span class="pl-k">return</span> <span class="pl-k">new</span> <span class="pl-smi">DetailsPresenter</span>();
@@ -235,10 +236,14 @@
     }
 
     <span class="pl-k">@Override</span>
+    <span class="pl-k">void</span> <span class="pl-en">onPresenterCreated</span><span class="pl-k">(</span><span class="pl-k">@NonNull</span> <span class="pl-smi">DetailsPresenter</span> <span class="pl-v">presenter</span><span class="pl-k">)</span> <span class="pl-k">{</span>
+        presenter<span class="pl-k">.</span>attachView<span class="pl-k">(</span><span class="pl-k">this</span><span class="pl-k">)</span><span class="pl-k">;</span>
+    <span class="pl-k">}</span>
+
+    <span class="pl-k">@Override</span>
     <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onActivityCreated</span>(<span class="pl-k">@Nullable</span> <span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
         <span class="pl-v">super</span><span class="pl-k">.</span>onActivityCreated(savedInstanceState);
-        getPresenter<span class="pl-k">.</span>registerView(<span class="pl-v">this</span>);
-        getPresenter<span class="pl-k">.</span>getInformationFromId(<span class="pl-s"><span class="pl-pds">"</span>ssdWRGD132<span class="pl-pds">"</span></span>);
+        getPresenter()<span class="pl-k">.</span>getInformationFromId(<span class="pl-s"><span class="pl-pds">"</span>ssdWRGD132<span class="pl-pds">"</span></span>);
     }
 
     <span class="pl-k">@Override</span>
@@ -260,6 +265,7 @@
                     <li><p><strong>addPresenter</strong> → in this method you have to create you instance of Presenter. </p></li>
                     <li><p><strong>getLayout</strong> → in this method you have pass the id reference to the layout. This library comes with <strong>ButterKnife</strong>, to provide efficiency I have implemented <strong>onCreateView</strong> in BaseFragment where I call <strong>ButterKnife.bind</strong> method, so you have view binding out of the box! <g-emoji alias="smile" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" ios-version="6.0">😄</g-emoji></p></li>
                     <li><p><strong>getPresenter</strong> → simple getter, to make your access to the presenter more cleaner.</p></li>
+                    <li><p><strong>onPresenterCreated</strong> → in this method you should attach the view to the presenter in order to start working.</p></li>
                 </ul>
                 <h4>Some notes on ButterKnife</h4>
 
@@ -277,8 +283,14 @@
                 </p>
                 <h4>Release History</h4>
                 <ul>
+                    <li><strong>0.1.0</strong></li>
+                        <ul>
+                            <li><strong>CHANGE</strong>: Folder refactor under UI package</li>
+                            <li><strong>CHANGE</strong>: Modified BasePresenter method registerView to attachView in order to get more consistence</li>
+                            <li><strong>CHANGE</strong>: Added new runOnBackground version in BaseInteractor that uses a ScheduledExecutorService and also cancel method to stop execution</li>
+                            <li><strong>CHANGE</strong>: Added Custom Views to extend BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout</li>
+                        </ul>
                     <li><strong>0.0.3</strong>
-
                         <ul>
                             <li><strong>CHANGE</strong>: Removed ButterKnife annotation processor<br>
                             </li>
@@ -286,13 +298,11 @@
                         </ul>
                     </li>
                     <li><strong>0.0.2</strong>
-
                         <ul>
                             <li><strong>CHANGE</strong>: Minor updates</li>
                         </ul>
                     </li>
                     <li><strong>0.0.1</strong>
-
                         <ul>
                             <li>Work in progress</li>
                         </ul>
