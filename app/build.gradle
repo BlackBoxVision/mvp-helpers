@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 25
@@ -25,14 +25,9 @@ android {
     packagingOptions {
         exclude "META-INF/services/javax.annotation.processing.Processor"
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
-}
-
-retrolambda {
-    jvmArgs "-noverify"
 }
 
 dependencies {
@@ -48,4 +43,5 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.1'
 
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
