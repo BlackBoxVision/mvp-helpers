@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.Toast
 
 import butterknife.BindView
+import butterknife.ButterKnife
 
 import io.blackbox_vision.helpers.R
 import io.blackbox_vision.helpers.util.MockUtils
@@ -22,6 +23,7 @@ class DetailsFragment : BaseFragment<DetailsPresenter>(), DetailsView {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        button = view!!.findViewById(R.id.sample_button) as Button
         button.setOnClickListener { v -> presenter!!.findRequiredInformation(MockUtils.SAMPLE) }
     }
 

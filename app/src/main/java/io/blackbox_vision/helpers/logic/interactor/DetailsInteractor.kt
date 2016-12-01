@@ -14,7 +14,7 @@ class DetailsInteractor : BaseInteractor() {
             //Getting data from somewhere
             val data = MockUtils.getMockedData(id)
 
-            runOnBackground(Runnable {
+            runOnUiThread(Runnable {
                 if (data != null) {
                     successListener.onSuccess(data)
                 } else {
