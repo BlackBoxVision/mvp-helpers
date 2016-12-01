@@ -7,9 +7,11 @@ This library, exposes a minimal API that I have abstracted during many projects.
 
 Check the following instructions under this **README** in order to get a project up and running with this simpler library.
 
-##Installation 
+##Installation
 
-Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow this instructions to get everything work: 
+Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. 
+
+###Java version  
 
 **Gradle**
 
@@ -18,7 +20,9 @@ Actually I don't have this library in **JCenter/Maven Central**, so if you want 
 allprojects {
 	repositories {
 		...
-		maven { url "https://jitpack.io" }
+		maven { 
+			url "https://jitpack.io" 
+		}
 	}
 }
 ```
@@ -26,7 +30,7 @@ allprojects {
 - Add the dependency:
 ```gradle
 dependencies {
-	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.3'
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.1.0'
 }
 ```
 
@@ -46,7 +50,7 @@ dependencies {
 <dependency>
   <groupId>com.github.BlackBoxVision</groupId>
   <artifactId>mvp-helpers</artifactId>
-	<version>v0.0.3</version>
+	<version>v0.1.0</version>
 </dependency>
 ```
 
@@ -59,7 +63,60 @@ dependencies {
 
 - Add the dependency:
 ```sbt
-  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.3"	
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.1.0"	
+```
+
+###Kotlin version
+
+- Add it in your root build.gradle at the end of repositories:
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { 
+			url "https://jitpack.io" 
+		}
+	}
+}
+```
+
+- Add the dependency:
+```gradle
+dependencies {
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.1-kt'
+}
+```
+
+**Maven**
+
+- Add this line to repositories section in pom.xml:
+```xml
+<repositories>
+	<repository>
+	   <id>jitpack.io</id>
+		 <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+```
+- Add the dependency:
+```xml
+<dependency>
+  <groupId>com.github.BlackBoxVision</groupId>
+  <artifactId>mvp-helpers</artifactId>
+	<version>v0.0.1-kt</version>
+</dependency>
+```
+
+**SBT**
+
+- Add it in your build.sbt at the end of resolvers:
+```sbt
+  resolvers += "jitpack" at "https://jitpack.io"
+```
+
+- Add the dependency:
+```sbt
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.1-kt"	
 ```
 
 ##Usage example
@@ -144,7 +201,7 @@ As you see, **BasePresenter** is a generic class, you have to pass to it the **V
 
 - **detachView** → This method dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
 
-- **registerView** → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
+- **attachView** → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
 
@@ -158,22 +215,27 @@ To finalize the explanation, check the sample implementation:
 
 ```java
 public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
+    
     @Override
     public addPresenter() {
-      return new DetailsPresenter();
+      	return new DetailsPresenter();
     }
     
     @LayoutRes
     @Override
     public int getLayout() {
-      return R.layout.fragment_details;
+      	return R.layout.fragment_details;
+    }
+    
+    @Override
+    void onPresenterCreated(@NonNull DetailsPresenter presenter) {
+    	presenter.attachView(this);
     }
     
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getPresenter.registerView(this);
-        getPresenter.getInformationFromId("ssdWRGD132");
+        getPresenter().getInformationFromId("ssdWRGD132");
     }
     
     @Override
@@ -198,6 +260,8 @@ When you inherit it, you will get the following methods to implement:
 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 
+- **onPresenterCreated** → In this method you should attach the view to the presenter in order to start working.
+
 ##Some notes on ButterKnife
 
 The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
@@ -218,12 +282,24 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
-* 0.0.3
-  * CHANGE: Removed ButterKnife annotation processor	
-  * CHANGE: Rename mvphelpers library to library
-* 0.0.2
-  * CHANGE: Minor updates
-* 0.0.1
+###**JAVA**
+
+* **0.1.0** 
+  * **CHANGE**: Folder refactor under **UI package**
+  * **CHANGE**: Modified **BasePresenter** method **registerView** to **attachView** in order to get more consistence
+  * **CHANGE**: Added new **runOnBackground** version in **BaseInteractor** that uses a ScheduledExecutorService and also cancel method to stop execution
+  * **CHANGE**: Added Custom Views to extend **BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout**
+* **0.0.3**
+  * **CHANGE**: Removed **ButterKnife** annotation processor	
+  * **CHANGE**: Rename **mvphelper** library to library
+* **0.0.2**
+  * **CHANGE**: Minor updates
+* **0.0.1**
+  * Work in progress
+
+###**KOTLIN**
+
+**0.0.1**
   * Work in progress
 
 ##License
