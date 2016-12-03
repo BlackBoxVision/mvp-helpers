@@ -14,6 +14,16 @@ public final class DetailsPresenter extends BasePresenter<DetailsView> {
         interactor = new DetailsInteractor();
     }
 
+    @Override
+    public void onViewAttached(@NonNull DetailsView view) {
+        //Restore app state
+    }
+
+    @Override
+    public void onViewDetached() {
+        //Save app state
+    }
+
     public void findRequiredInformation(@NonNull String id) {
         if (isViewAttached()) {
             interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
