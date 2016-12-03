@@ -208,7 +208,7 @@ The standard **ButterKnife** library is included by default. But there is a miss
 
 ```gradle
 dependencies {
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }
 ```
 
