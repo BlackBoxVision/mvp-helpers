@@ -15,11 +15,13 @@ public final class DetailsInteractor extends BaseInteractor {
             //Getting data from somewhere
             final Bundle data = MockUtils.getMockedData(id);
 
-            if (data != null) {
-                runOnUiThread(() -> successListener.onSuccess(data));
-            } else {
-                runOnUiThread(() -> errorListener.onError("Ups, something went wrong"));
-            }
+            runOnUiThread(() -> {
+                if (data != null) {
+                    successListener.onSuccess(data);
+                } else {
+                    errorListener.onError("Ups, something went wrong");
+                }
+            });
         });
     }
 }
