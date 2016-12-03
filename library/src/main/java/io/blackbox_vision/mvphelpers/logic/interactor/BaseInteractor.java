@@ -33,7 +33,7 @@ public class BaseInteractor {
         Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
 
         if (executor.isTerminated()) {
-            executor = Executors.newFixedThreadPool(5);
+            executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
         }
 
         final Future<?> task = executor.submit(runnable);
