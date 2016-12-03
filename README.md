@@ -13,9 +13,7 @@ Check the following instructions under this **README** in order to get a project
 
 ##Installation
 
-Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. 
-
-###Java version  
+Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. Looking for Kotlin variant? [Go here](https://github.com/BlackBoxVision/mvp-helpers/tree/kotlin)
 
 **Gradle**
 
@@ -70,59 +68,6 @@ dependencies {
   libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.1.0"	
 ```
 
-###Kotlin version
-
-- Add it in your root build.gradle at the end of repositories:
-```gradle
-allprojects {
-	repositories {
-		...
-		maven { 
-			url "https://jitpack.io" 
-		}
-	}
-}
-```
-
-- Add the dependency:
-```gradle
-dependencies {
-	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.1-kt'
-}
-```
-
-**Maven**
-
-- Add this line to repositories section in pom.xml:
-```xml
-<repositories>
-	<repository>
-	   <id>jitpack.io</id>
-		 <url>https://jitpack.io</url>
-	</repository>
-</repositories>
-```
-- Add the dependency:
-```xml
-<dependency>
-  <groupId>com.github.BlackBoxVision</groupId>
-  <artifactId>mvp-helpers</artifactId>
-	<version>v0.0.1-kt</version>
-</dependency>
-```
-
-**SBT**
-
-- Add it in your build.sbt at the end of resolvers:
-```sbt
-  resolvers += "jitpack" at "https://jitpack.io"
-```
-
-- Add the dependency:
-```sbt
-  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.1-kt"	
-```
-
 ##Core Concepts
 
 The concepts behind this library are the following ones: 
@@ -158,22 +103,23 @@ public interface DetailsView extends BaseView {
 //This example uses Java 8 features, I assume the usage of retrolambda
 public final class DetailsInteractor extends BaseInteractor {
 
-  public void retrieveDetailsFromService(@NonNull final String id, @NonNull final OnSuccessListener<Bundle> successListener, @NonNull final OnErrorListener<String> errorListener) {
-    runOnBackground(() -> {
-      //Getting data from somewhere
-      Bundle data = ... ;   
-      
-      runOnUiThread(() -> {
-      	if (data != null) {
-			successListener.onSuccess(data);	
-		} else {
-			errorListener.onError("Ups, something went wrong");
-		}
-      });
-    })
-  }
+    public void retrieveDetailsFromService(@NonNull final String id, @NonNull final OnSuccessListener<Bundle> successListener, @NonNull final OnErrorListener<String> errorListener) {
+        runOnBackground(() -> {
+            //Getting data from somewhere
+            final Bundle data = MockUtils.getMockedData(id);
+
+            runOnUiThread(() -> {
+                if (data != null) {
+                    successListener.onSuccess(data);
+                } else {
+                    errorListener.onError("Ups, something went wrong");
+                } 
+            });
+        });
+    }
 }
 ```
+
 **3** - Create a **Presenter** class by extending the [**BasePresenter**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/presenter/BasePresenter.java) class. The **BasePresenter** provides you with a set of helper methods to deal with **View** management. The methods are the following ones:
 
 - **isViewAttached** → check if you have set the view to the presenter, returns to you a boolean value that you should handle in your presenter implementation. 
@@ -184,29 +130,29 @@ public final class DetailsInteractor extends BaseInteractor {
 ```java
 //I use method references from Java 8 to point the callbacks to interactor, I assume a working project with Retrolambda
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
-  private DetailsInteractor interactor;
+    private DetailsInteractor interactor;
   
-  public DetailsPresenter() { 
-    interactor = new DetailsInteractor();
-  }
-  
-  public void getInformationFromId(@NonNull String id) {
-    if (isViewAttached()) {
-      interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+    public DetailsPresenter() { 
+        interactor = new DetailsInteractor();
     }
-  }
   
-  private void onSuccess(@NonNull Bundle data) {
-    if (isViewAttached()) {
-      getView().onInfoReceived(data);
+    public void getInformationFromId(@NonNull String id) {
+        if (isViewAttached()) {
+          	interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+        }
     }
-  }
   
-  private void onError(@NonNull String errorMessage) {
-    if (isViewAttached()) {
-      getView().onInfoError(errorMessage);
+    private void onSuccess(@NonNull Bundle data) {
+      	if (isViewAttached()) {
+          	getView().onInfoReceived(data);
+        }
     }
-  }
+  
+    private void onError(@NonNull String errorMessage) {
+      	if (isViewAttached()) {
+          	getView().onInfoError(errorMessage);
+        }
+    }
 }
 ```
 
@@ -276,8 +222,6 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
-###**JAVA**
-
 * **0.1.0** 
   * **CHANGE**: Folder refactor under **UI package**
   * **CHANGE**: Modified **BasePresenter** method **registerView** to **attachView** in order to get more consistence
@@ -289,11 +233,6 @@ Of course, if you see something that you want to upgrade from this library, or a
 * **0.0.2**
   * **CHANGE**: Minor updates
 * **0.0.1**
-  * Work in progress
-
-###**KOTLIN**
-
-**0.0.1**
   * Work in progress
 
 ##License
