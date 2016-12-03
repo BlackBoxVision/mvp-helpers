@@ -86,9 +86,9 @@ The usage is really simple, the concepts behind this library are the following o
 ```java
 public interface DetailsView extends BaseView {
 
-  void onInfoReceived(@NonNull Bundle information);
-  
-  void onInfoError(@NonNull String errorMessage);
+    void onInfoReceived(@NonNull Bundle information);
+
+    void onInfoError(@NonNull String errorMessage);
 }
 ```
 
@@ -131,26 +131,26 @@ public final class DetailsInteractor extends BaseInteractor {
 //I use method references from Java 8 to point the callbacks to interactor, I assume a working project with Retrolambda
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
     private DetailsInteractor interactor;
-  
-    public DetailsPresenter() { 
+
+    public DetailsPresenter() {
         interactor = new DetailsInteractor();
     }
-  
-    public void getInformationFromId(@NonNull String id) {
+
+    public void findRequiredInformation(@NonNull String id) {
         if (isViewAttached()) {
-          	interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+            interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
         }
     }
-  
-    private void onSuccess(@NonNull Bundle data) {
-      	if (isViewAttached()) {
-          	getView().onInfoReceived(data);
+
+    private void onSuccess(@NonNull Bundle information) {
+        if (isViewAttached()) {
+            getView().onInfoReceived(information);
         }
     }
-  
+
     private void onError(@NonNull String errorMessage) {
-      	if (isViewAttached()) {
-          	getView().onInfoError(errorMessage);
+        if (isViewAttached()) {
+            getView().onInfoError(errorMessage);
         }
     }
 }
