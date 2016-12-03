@@ -20,7 +20,7 @@ public final class DetailsPresenter extends BasePresenter<DetailsView> {
     }
 
     @Override
-    public void onViewDetached() {
+    public void onViewDetached(@NonNull DetailsView view) {
         //Save app state
     }
 
