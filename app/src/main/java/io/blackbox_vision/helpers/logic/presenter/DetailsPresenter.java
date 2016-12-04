@@ -7,20 +7,26 @@ import io.blackbox_vision.helpers.logic.view.DetailsView;
 import io.blackbox_vision.helpers.logic.interactor.DetailsInteractor;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
+
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
+    private static DetailsPresenter detailsPresenter = null;
     private DetailsInteractor interactor;
 
-    public DetailsPresenter() {
-        interactor = new DetailsInteractor();
-    }
+    private DetailsPresenter() { }
 
     @Override
     public void onViewAttached(@NonNull DetailsView view) {
+        //Init your interactors here
+        interactor = DetailsInteractor.newInstance();
+
         //Restore app state
     }
 
     @Override
     public void onViewDetached(@NonNull DetailsView view) {
+        //Dereference interactors
+        interactor = null;
+
         //Save app state
     }
 
@@ -40,5 +46,13 @@ public final class DetailsPresenter extends BasePresenter<DetailsView> {
         if (isViewAttached()) {
             getView().onInfoError(errorMessage);
         }
+    }
+
+    public static DetailsPresenter newInstance() {
+        if (null == detailsPresenter) {
+            detailsPresenter = new DetailsPresenter();
+        }
+
+        return detailsPresenter;
     }
 }

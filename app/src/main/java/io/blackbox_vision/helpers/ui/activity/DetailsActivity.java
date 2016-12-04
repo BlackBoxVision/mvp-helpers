@@ -6,7 +6,8 @@ import android.os.Bundle;
 import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.ui.fragment.DetailsFragment;
 
-public class DetailsActivity extends AppCompatActivity {
+
+public final class DetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

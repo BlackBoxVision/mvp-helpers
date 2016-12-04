@@ -31,7 +31,7 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     @NonNull
     @Override
     public DetailsPresenter addPresenter() {
-        return new DetailsPresenter();
+        return DetailsPresenter.newInstance();
     }
 
     @LayoutRes
