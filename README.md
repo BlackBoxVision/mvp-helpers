@@ -79,7 +79,7 @@ The concepts behind this library are the following ones:
 
 ##Usage example
 
-The usage is really simple, the concepts behind this library are the following ones: 
+The usage is really simple: 
 
 **1** - Create your **View** interface by extending the [**BaseView**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/view/BaseView.java). **BaseView** is an empty interface that acts as water mark for the **Presenter**.
 
