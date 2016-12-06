@@ -11,7 +11,7 @@ public final class MockUtils {
     private static final Bundle bundle = new Bundle();
 
     //This doesn't make sense at all, it's for educational purpose
-    public static Bundle getMockedData(@NonNull String id) {
+    public static Bundle getData(@NonNull String id) {
         bundle.putString(SAMPLE, "HELLO MVP!!");
         map.put(SAMPLE, bundle);
         return map.get(id);

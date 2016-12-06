@@ -14,18 +14,15 @@ public final class DetailsInteractor extends BaseInteractor {
 
     private DetailsInteractor() { }
 
-    public void retrieveDetailsFromService(@NonNull final String id,
-                                           @NonNull final OnSuccessListener<Bundle> successListener,
-                                           @NonNull final OnErrorListener<String> errorListener) {
+    public void retrieveDetailsFromService(@NonNull String id, @NonNull OnSuccessListener<Bundle> sListener, @NonNull OnErrorListener<String> eListener) {
         runOnBackground(() -> {
-            //Getting data from somewhere
-            final Bundle data = MockUtils.getMockedData(id);
+            final Bundle data = MockUtils.getData(id);
 
             runOnUiThread(() -> {
                 if (data != null) {
-                    successListener.onSuccess(data);
+                    sListener.onSuccess(data);
                 } else {
-                    errorListener.onError("Ups, something went wrong");
+                    eListener.onError("Ups, something went wrong");
                 }
             });
         });
