@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
+
 public abstract class BaseRelativeLayout<T extends BasePresenter> extends RelativeLayout {
 
     @Nullable

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 
@@ -53,6 +54,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
     public abstract void onPresenterCreated(@NonNull T presenter);
 
+    @Nullable
     public T getPresenter() {
         return presenter;
     }

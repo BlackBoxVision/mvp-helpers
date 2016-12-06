@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
+
 public abstract class BaseLinearLayout<T extends BasePresenter> extends LinearLayout {
 
     @Nullable

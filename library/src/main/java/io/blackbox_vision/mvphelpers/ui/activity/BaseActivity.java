@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
+
 
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity {
     protected Unbinder unbinder;
@@ -41,9 +43,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @LayoutRes
     public abstract int getLayout();
 
-
     public abstract void onPresenterCreated(@NonNull T presenter);
 
+    @Nullable
     public T getPresenter() {
         return presenter;
     }
