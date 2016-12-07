@@ -11,9 +11,11 @@ import android.widget.Toast;
 import butterknife.BindView;
 
 import io.blackbox_vision.helpers.R;
+import io.blackbox_vision.helpers.logic.factory.DetailsPresenterFactory;
 import io.blackbox_vision.helpers.util.MockUtils;
 import io.blackbox_vision.helpers.logic.presenter.DetailsPresenter;
 import io.blackbox_vision.helpers.logic.view.DetailsView;
+import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
 
@@ -25,13 +27,17 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        button.setOnClickListener(v -> getPresenter().findRequiredInformation(MockUtils.SAMPLE));
+        button.setOnClickListener(v -> {
+            if (null != getPresenter()) {
+                getPresenter().findRequiredInformation(MockUtils.SAMPLE);
+            }
+        });
     }
 
     @NonNull
     @Override
-    public DetailsPresenter addPresenter() {
-        return DetailsPresenter.newInstance();
+    public PresenterFactory<DetailsPresenter> createFactory() {
+        return DetailsPresenterFactory.newInstance();
     }
 
     @LayoutRes
