@@ -10,29 +10,29 @@ import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
     private static DetailsPresenter detailsPresenter = null;
-    private DetailsInteractor interactor;
+    private DetailsInteractor detailsInteractor;
 
     private DetailsPresenter() { }
 
     @Override
     public void onViewAttached(@NonNull DetailsView view) {
         //Init your interactors here
-        interactor = DetailsInteractor.newInstance();
+        detailsInteractor = DetailsInteractor.newInstance();
 
         //Restore app state
     }
 
     @Override
-    public void onViewDetached(@NonNull DetailsView view) {
+    public void onViewDetached() {
         //Dereference interactors
-        interactor = null;
+        detailsInteractor = null;
 
         //Save app state
     }
 
     public void findRequiredInformation(@NonNull String id) {
         if (isViewAttached()) {
-            interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+            detailsInteractor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
         }
     }
 
