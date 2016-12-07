@@ -50,7 +50,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     @Override
     public Loader<P> onCreateLoader(int id, Bundle args) {
-        return new PresenterLoader<>(getContext(), createFactory());
+        return new PresenterLoader<>(getContext(), createPresenterFactory());
     }
 
     @Override
@@ -68,7 +68,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     @NonNull
-    public abstract PresenterFactory<P> createFactory();
+    public abstract PresenterFactory<P> createPresenterFactory();
 
     @LayoutRes
     public abstract int getLayout();

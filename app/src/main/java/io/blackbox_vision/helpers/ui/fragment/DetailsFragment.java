@@ -36,7 +36,7 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 
     @NonNull
     @Override
-    public PresenterFactory<DetailsPresenter> createFactory() {
+    public PresenterFactory<DetailsPresenter> createPresenterFactory() {
         return DetailsPresenterFactory.newInstance();
     }
 
