@@ -32,7 +32,7 @@ public class BaseInteractor {
     protected void runOnBackground(@NonNull Runnable runnable) {
         Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
 
-        if (executor.isTerminated()) {
+        if (executor.isShutdown()) {
             executor = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
         }
 
