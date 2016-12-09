@@ -24,6 +24,10 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
     @BindView(R.id.sample_button)
     Button button;
 
+    public DetailsFragment() {
+        setRetainInstance(true);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

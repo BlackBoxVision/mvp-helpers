@@ -1,17 +1,16 @@
 package io.blackbox_vision.helpers.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -80,7 +79,7 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     }
 
     @Override
-    public void onTaskListFetched(@NonNull List<Task> tasks) {
+    public void onTaskListFetched(@NonNull java.util.List<Task> tasks) {
         taskListView.setAdapter(new TaskListAdapter(getApplicationContext(), tasks));
     }
 
