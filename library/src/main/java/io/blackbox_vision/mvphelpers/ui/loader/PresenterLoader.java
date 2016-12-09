@@ -43,11 +43,11 @@ public final class PresenterLoader<P extends BasePresenter> extends Loader<P> {
 
     @Override
     protected void onReset() {
+        super.onReset();
+
         if (null != presenter) {
             presenter.detachView();
             presenter = null;
         }
-
-        super.onReset();
     }
 }
