@@ -53,11 +53,13 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 
     @Override
     public void onInfoReceived(@NonNull Bundle information) {
-        Toast.makeText(getContext(), "This is the information ---> " + information.get(MockUtils.SAMPLE), Toast.LENGTH_LONG).show();
+        final String message = "This is the information ---> " + information.get(MockUtils.SAMPLE);
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onInfoError(@NonNull String errorMessage) {
-        Toast.makeText(getContext(), "This is the error ---> " + errorMessage, Toast.LENGTH_SHORT).show();
+        final String message = "This is the error ---> " + errorMessage;
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

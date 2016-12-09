@@ -12,7 +12,7 @@ public abstract class BasePresenter<V extends BaseView> {
 
     public abstract void onViewDetached();
 
-    protected boolean isViewAttached() {
+    public boolean isViewAttached() {
         return this.view != null;
     }
 

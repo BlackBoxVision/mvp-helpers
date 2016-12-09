@@ -1,5 +1,6 @@
 package io.blackbox_vision.mvphelpers.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -65,6 +66,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             presenter.detachView();
             presenter = null;
         }
+    }
+
+    @NonNull
+    protected Context getApplicationContext() {
+        return getContext().getApplicationContext();
     }
 
     @NonNull
