@@ -1,23 +1,15 @@
 package io.blackbox_vision.helpers.logic.model;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
 
-public final class Task {
-    private int id;
+public final class Task extends SugarRecord {
     private String title;
     private String description;
     private Date initialDate;
     private Date endDate;
-
-    public int getId() {
-        return id;
-    }
-
-    public Task setId(int id) {
-        this.id = id;
-        return this;
-    }
 
     public String getTitle() {
         return title;
@@ -58,7 +50,7 @@ public final class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", initialDate=" + initialDate +

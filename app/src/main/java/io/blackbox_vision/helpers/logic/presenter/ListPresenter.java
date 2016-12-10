@@ -27,10 +27,11 @@ public final class ListPresenter extends BasePresenter<ListView> {
         listInteractor = null;
     }
 
-    public void findTaskList() {
+    public void requestTaskList() {
         if (isViewAttached()) {
             getView().hideTaskList();
             getView().showProgress();
+
             getListInteractor().findTaskList(this::onTaskListError, this::onTaskListFetched);
         }
     }

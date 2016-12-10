@@ -29,6 +29,12 @@ public class BaseInteractor {
         handler.post(runnable);
     }
 
+    protected void runOnUiThread(@NonNull Runnable runnable, long delayAtMillis) {
+        Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
+
+        handler.postDelayed(runnable, delayAtMillis);
+    }
+
     protected void runOnBackground(@NonNull Runnable runnable) {
         Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
 

@@ -11,10 +11,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
 import io.blackbox_vision.helpers.R;
+import io.blackbox_vision.helpers.logic.error.TaskException;
 import io.blackbox_vision.helpers.logic.factory.ListPresenterFactory;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.helpers.logic.presenter.ListPresenter;
@@ -26,6 +29,8 @@ import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
 
 public final class ListFragment extends BaseFragment<ListPresenter> implements ListView {
+
+    TaskListAdapter taskListAdapter;
 
     @BindView(R.id.taskListView)
     RecyclerView taskListView;
@@ -42,9 +47,14 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        taskListAdapter = new TaskListAdapter(getApplicationContext(), new ArrayList<>());
+
         taskListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         taskListView.setItemViewCacheSize(1024 * 24);
+        taskListView.setAdapter(taskListAdapter);
         taskListView.setHasFixedSize(true);
+
+        taskListAdapter.notifyDataSetChanged();
 
         newTaskButton.setOnClickListener(this::handleNewTaskButtonClick);
     }
@@ -63,7 +73,7 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     @Override
     public void onPresenterCreated(@NonNull ListPresenter presenter) {
         presenter.attachView(this);
-        presenter.findTaskList();
+        presenter.requestTaskList();
     }
 
     public void handleNewTaskButtonClick(@NonNull View v) {
@@ -79,13 +89,19 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     }
 
     @Override
-    public void onTaskListFetched(@NonNull java.util.List<Task> tasks) {
-        taskListView.setAdapter(new TaskListAdapter(getApplicationContext(), tasks));
+    public void onTaskListFetched(@NonNull List<Task> tasks) {
+        taskListAdapter.setItems(tasks);
     }
 
     @Override
     public void onTaskListError(@NonNull Throwable error) {
-        errorTextView.setText(error.getMessage());
+        switch (error.getMessage()) {
+            case TaskException.EMPTY_LIST:
+                errorTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.leak_canary_icon, 0, 0);
+                errorTextView.setText(getString(R.string.error_empty_list));
+
+                break;
+        }
     }
 
     @Override

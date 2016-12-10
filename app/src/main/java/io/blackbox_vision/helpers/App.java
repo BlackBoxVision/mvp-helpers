@@ -1,15 +1,15 @@
 package io.blackbox_vision.helpers;
 
-import android.app.Application;
 import android.os.Build;
 
+import com.orm.SugarApp;
 import com.squareup.leakcanary.LeakCanary;
 
 import io.blackbox_vision.mvphelpers.utils.bugfix.IMMLeaks;
 import io.blackbox_vision.mvphelpers.utils.bugfix.UserManagerLeaks;
 
 
-public final class App extends Application {
+public final class App extends SugarApp {
 
     @Override
     public void onCreate() {
