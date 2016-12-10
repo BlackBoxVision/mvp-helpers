@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Helpers</string>
+    <string name="app_name">Tasks Manager</string>
     <string name="error_empty_list">No tasks added yet</string>
 </resources>
