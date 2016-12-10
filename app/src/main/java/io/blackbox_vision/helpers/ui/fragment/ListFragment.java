@@ -1,10 +1,13 @@
 package io.blackbox_vision.helpers.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -97,7 +100,12 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     public void onTaskListError(@NonNull Throwable error) {
         switch (error.getMessage()) {
             case TaskException.EMPTY_LIST:
-                errorTextView.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.leak_canary_icon, 0, 0);
+                int drawableColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
+                Drawable d = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
+                d.setColorFilter(drawableColor, PorterDuff.Mode.SRC_ATOP);
+
+                errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+                errorTextView.setTextSize(16F);
                 errorTextView.setText(getString(R.string.error_empty_list));
 
                 break;
