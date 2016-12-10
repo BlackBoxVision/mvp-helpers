@@ -4,27 +4,26 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import io.blackbox_vision.helpers.logic.interactor.ListInteractor;
+import io.blackbox_vision.helpers.logic.interactor.TaskListInteractor;
 import io.blackbox_vision.helpers.logic.model.Task;
-import io.blackbox_vision.helpers.logic.view.ListView;
+import io.blackbox_vision.helpers.logic.view.TaskListView;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 
-public final class ListPresenter extends BasePresenter<ListView> {
-    private static ListPresenter listPresenter = null;
-    private ListInteractor listInteractor;
+public final class TaskListPresenter extends BasePresenter<TaskListView> {
+    private static TaskListPresenter taskListPresenter = null;
+    private TaskListInteractor taskListInteractor;
 
-    private ListPresenter() { }
+    private TaskListPresenter() { }
 
     @Override
-    public void onViewAttached(@NonNull ListView view) {
-        listInteractor = ListInteractor.newInstance();
-        view.hideProgress();
+    public void onViewAttached(@NonNull TaskListView view) {
+        taskListInteractor = TaskListInteractor.newInstance();
     }
 
     @Override
     public void onViewDetached() {
-        listInteractor = null;
+        taskListInteractor = null;
     }
 
     public void requestTaskList() {
@@ -32,13 +31,19 @@ public final class ListPresenter extends BasePresenter<ListView> {
             getView().hideTaskList();
             getView().showProgress();
 
-            getListInteractor().findTaskList(this::onTaskListError, this::onTaskListFetched);
+            taskListInteractor.getTasks(this::onTaskListError, this::onTaskListFetched);
         }
     }
 
     public void createNewTask() {
         if (isViewAttached()) {
             getView().onNewTaskRequest();
+        }
+    }
+
+    public void showTask(@NonNull Long id) {
+        if (isViewAttached()) {
+            getView().onTaskDetailRequest(id);
         }
     }
 
@@ -58,15 +63,11 @@ public final class ListPresenter extends BasePresenter<ListView> {
         }
     }
 
-    private ListInteractor getListInteractor() {
-        return listInteractor;
-    }
-
-    public static ListPresenter newInstance() {
-        if (null == listPresenter) {
-            listPresenter = new ListPresenter();
+    public static TaskListPresenter newInstance() {
+        if (null == taskListPresenter) {
+            taskListPresenter = new TaskListPresenter();
         }
 
-        return listPresenter;
+        return taskListPresenter;
     }
 }

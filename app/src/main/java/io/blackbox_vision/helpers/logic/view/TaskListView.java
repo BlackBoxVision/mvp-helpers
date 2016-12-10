@@ -8,13 +8,15 @@ import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 
 
-public interface ListView extends BaseView {
+public interface TaskListView extends BaseView {
 
     void onTaskListFetched(@NonNull List<Task> tasks);
 
     void onTaskListError(@NonNull Throwable error);
 
     void onNewTaskRequest();
+
+    void onTaskDetailRequest(@NonNull Long id);
 
     void showProgress();
 
@@ -25,6 +27,4 @@ public interface ListView extends BaseView {
     void hideTaskList();
 
     void showErrorView();
-
-    void hideErrorView();
 }

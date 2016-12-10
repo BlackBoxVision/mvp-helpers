@@ -17,6 +17,7 @@ import io.blackbox_vision.helpers.logic.model.Task;
 
 
 public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
+    private OnItemSelectedListener<Task> onItemSelectedListener;
     private Context context;
     private List<Task> items;
 
@@ -36,6 +37,7 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Task task = items.get(position);
 
+        holder.itemView.setOnClickListener((v) -> onItemSelectedListener.onItemSelected(v, task, position));
         holder.textItem.setText(task.getTitle());
     }
 
@@ -49,6 +51,10 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
         notifyDataSetChanged();
     }
 
+    public void setOnItemSelectedListener(OnItemSelectedListener<Task> onItemSelectedListener) {
+        this.onItemSelectedListener = onItemSelectedListener;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textItem)
@@ -58,5 +64,10 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+    public interface OnItemSelectedListener<T> {
+
+        void onItemSelected(@NonNull View view, @NonNull T data, int position);
     }
 }

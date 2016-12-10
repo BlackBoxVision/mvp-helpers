@@ -21,18 +21,21 @@ import butterknife.BindView;
 
 import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.factory.ListPresenterFactory;
+import io.blackbox_vision.helpers.logic.factory.TaskListPresenterFactory;
 import io.blackbox_vision.helpers.logic.model.Task;
-import io.blackbox_vision.helpers.logic.presenter.ListPresenter;
-import io.blackbox_vision.helpers.logic.view.ListView;
-import io.blackbox_vision.helpers.ui.activity.DetailsActivity;
+import io.blackbox_vision.helpers.logic.presenter.TaskListPresenter;
+import io.blackbox_vision.helpers.logic.view.TaskListView;
+import io.blackbox_vision.helpers.ui.activity.AddTaskActivity;
 import io.blackbox_vision.helpers.ui.adapter.TaskListAdapter;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
 
-public final class ListFragment extends BaseFragment<ListPresenter> implements ListView {
+public final class TaskListFragment extends BaseFragment<TaskListPresenter> implements TaskListView {
+    public static final String LAUNCH_MODE = "LAUNCH_MODE";
+    public static final String TASK_ID = "TASK_ID";
 
+    @NonNull
     TaskListAdapter taskListAdapter;
 
     @BindView(R.id.taskListView)
@@ -51,6 +54,7 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         taskListAdapter = new TaskListAdapter(getApplicationContext(), new ArrayList<>());
+        taskListAdapter.setOnItemSelectedListener(this::handleItemSelected);
 
         taskListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         taskListView.setItemViewCacheSize(1024 * 24);
@@ -64,17 +68,17 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
 
     @NonNull
     @Override
-    public PresenterFactory<ListPresenter> createPresenterFactory() {
-        return ListPresenterFactory.newInstance();
+    public PresenterFactory<TaskListPresenter> createPresenterFactory() {
+        return TaskListPresenterFactory.newInstance();
     }
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_list;
+        return R.layout.fragment_task_list;
     }
 
     @Override
-    public void onPresenterCreated(@NonNull ListPresenter presenter) {
+    public void onPresenterCreated(@NonNull TaskListPresenter presenter) {
         presenter.attachView(this);
         presenter.requestTaskList();
     }
@@ -85,9 +89,28 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
         }
     }
 
+    public void handleItemSelected(@NonNull View v, @NonNull Task task, int position) {
+        if (null != getPresenter()) {
+            getPresenter().showTask(task.getId());
+        }
+    }
+
     @Override
     public void onNewTaskRequest() {
-        final Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+        final Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
+
+        intent.putExtra(LAUNCH_MODE, "create");
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTaskDetailRequest(@NonNull Long id) {
+        final Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
+
+        intent.putExtra(TASK_ID, id);
+        intent.putExtra(LAUNCH_MODE, "edit");
+
         startActivity(intent);
     }
 
@@ -98,15 +121,18 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
 
     @Override
     public void onTaskListError(@NonNull Throwable error) {
-        switch (error.getMessage()) {
+        final String msg = error.getMessage();
+
+        switch (msg) {
             case TaskException.EMPTY_LIST:
                 int drawableColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
-                Drawable d = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
+
+                final Drawable d = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
                 d.setColorFilter(drawableColor, PorterDuff.Mode.SRC_ATOP);
 
                 errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
-                errorTextView.setTextSize(16F);
                 errorTextView.setText(getString(R.string.error_empty_list));
+                errorTextView.setTextSize(16F);
 
                 break;
         }
@@ -135,10 +161,5 @@ public final class ListFragment extends BaseFragment<ListPresenter> implements L
     @Override
     public void showErrorView() {
         errorTextView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideErrorView() {
-        errorTextView.setVisibility(View.INVISIBLE);
     }
 }

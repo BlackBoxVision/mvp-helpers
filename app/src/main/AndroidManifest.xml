@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.ListActivity"
+            android:name=".ui.activity.TaskListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.DetailsActivity" />
+        <activity
+            android:name=".ui.activity.AddTaskActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data android:name="DATABASE" android:value="tasks.db" />
         <meta-data android:name="VERSION" android:value="1" />

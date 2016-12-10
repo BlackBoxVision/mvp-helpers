@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 
 
-public interface DetailsView extends BaseView {
+public interface AddTaskView extends BaseView {
 
     void onInfoReceived(@NonNull Bundle information);
 

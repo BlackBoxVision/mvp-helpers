@@ -1,8 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.blackbox_vision.helpers.ui.fragment.DetailsFragment">
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
+    tools:showIn="@layout/activity_add_task">
 
     <Button
         android:text="¡Click me!"
@@ -10,4 +12,4 @@
         android:layout_height="wrap_content"
         android:id="@+id/sample_button" />
 
-</FrameLayout>
+</RelativeLayout>

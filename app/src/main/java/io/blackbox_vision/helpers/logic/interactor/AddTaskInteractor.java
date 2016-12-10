@@ -9,10 +9,10 @@ import io.blackbox_vision.mvphelpers.logic.listener.OnErrorListener;
 import io.blackbox_vision.mvphelpers.logic.listener.OnSuccessListener;
 
 
-public final class DetailsInteractor extends BaseInteractor {
-    private static DetailsInteractor detailsInteractor = null;
+public final class AddTaskInteractor extends BaseInteractor {
+    private static AddTaskInteractor addTaskInteractor = null;
 
-    private DetailsInteractor() { }
+    private AddTaskInteractor() { }
 
     public void retrieveDetailsFromService(@NonNull String id, @NonNull OnSuccessListener<Bundle> sListener, @NonNull OnErrorListener<String> eListener) {
         runOnBackground(() -> {
@@ -28,11 +28,11 @@ public final class DetailsInteractor extends BaseInteractor {
         });
     }
 
-    public static DetailsInteractor newInstance() {
-        if (null == detailsInteractor) {
-            detailsInteractor = new DetailsInteractor();
+    public static AddTaskInteractor newInstance() {
+        if (null == addTaskInteractor) {
+            addTaskInteractor = new AddTaskInteractor();
         }
 
-        return detailsInteractor;
+        return addTaskInteractor;
     }
 }

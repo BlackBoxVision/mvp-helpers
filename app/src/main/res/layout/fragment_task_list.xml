@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/content_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin"
-    tools:context="io.blackbox_vision.helpers.ui.fragment.ListFragment"
-    tools:showIn="@layout/activity_list">
+    tools:context="io.blackbox_vision.helpers.ui.fragment.TaskListFragment"
+    tools:showIn="@layout/activity_task_list">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/taskListView"
@@ -37,6 +38,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_add_white_24dp" />
+        app:srcCompat="@drawable/ic_add_white_24dp"
+        app:fabSize="normal" />
 
 </RelativeLayout>
