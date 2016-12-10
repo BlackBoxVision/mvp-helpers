@@ -1,30 +1,61 @@
 package io.blackbox_vision.helpers.logic.interactor;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import io.blackbox_vision.helpers.util.MockUtils;
+import io.blackbox_vision.helpers.logic.error.TaskException;
+import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.mvphelpers.logic.interactor.BaseInteractor;
 import io.blackbox_vision.mvphelpers.logic.listener.OnErrorListener;
 import io.blackbox_vision.mvphelpers.logic.listener.OnSuccessListener;
 
 
+@SuppressWarnings("all")
 public final class AddTaskInteractor extends BaseInteractor {
     private static AddTaskInteractor addTaskInteractor = null;
 
     private AddTaskInteractor() { }
 
-    public void retrieveDetailsFromService(@NonNull String id, @NonNull OnSuccessListener<Bundle> sListener, @NonNull OnErrorListener<String> eListener) {
+    public void addNewTask(@NonNull Task task,
+                           @NonNull OnErrorListener<Throwable> errorListener,
+                           @NonNull OnSuccessListener<Task> successListener) {
         runOnBackground(() -> {
-            final Bundle data = MockUtils.getData(id);
+            Long id = Task.save(task);
+            task.setId(id);
 
-            runOnUiThread(() -> {
-                if (data != null) {
-                    sListener.onSuccess(data);
-                } else {
-                    eListener.onError("Ups, something went wrong");
-                }
-            });
+            if (null != id) {
+                runOnUiThread(() -> successListener.onSuccess(task));
+            } else {
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.CANNOT_CREATE_TASK)));
+            }
+        });
+    }
+
+    public void updateTask(@NonNull Task task,
+                           @NonNull OnErrorListener<Throwable> errorListener,
+                           @NonNull OnSuccessListener<Task> successListener) {
+        runOnBackground(() -> {
+            Long id = Task.update(task);
+            task.setId(id);
+
+            if (null != id) {
+                runOnUiThread(() -> successListener.onSuccess(task));
+            } else {
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.CANNOT_CREATE_TASK)));
+            }
+        });
+    }
+
+    public void findTaskById(@NonNull Long id,
+                             @NonNull OnErrorListener<Throwable> errorListener,
+                             @NonNull OnSuccessListener<Task> successListener) {
+        runOnBackground(() -> {
+            Task task = Task.findById(Task.class, id);
+
+            if (null != id) {
+                runOnUiThread(() -> successListener.onSuccess(task));
+            } else {
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.CANNOT_UPDATE_TASK)));
+            }
         });
     }
 

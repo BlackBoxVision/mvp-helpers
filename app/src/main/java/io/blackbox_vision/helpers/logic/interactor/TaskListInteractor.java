@@ -17,16 +17,15 @@ public final class TaskListInteractor extends BaseInteractor {
 
     private TaskListInteractor() { }
 
-    public void getTasks(@NonNull OnErrorListener<Throwable> errorListener, @NonNull OnSuccessListener<List<Task>> successListener) {
+    public void getTasks(@NonNull OnErrorListener<Throwable> errorListener,
+                         @NonNull OnSuccessListener<List<Task>> successListener) {
         runOnBackground(() -> {
             List<Task> tasks = Task.find(Task.class, null);
 
             if (!tasks.isEmpty()) {
                 runOnUiThread(() -> successListener.onSuccess(tasks), DELAY_IN_MILLIS);
             } else {
-                final Throwable error = new TaskException(TaskException.EMPTY_LIST);
-
-                runOnUiThread(() -> errorListener.onError(error), DELAY_IN_MILLIS);
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.EMPTY_LIST)), DELAY_IN_MILLIS);
             }
         });
     }

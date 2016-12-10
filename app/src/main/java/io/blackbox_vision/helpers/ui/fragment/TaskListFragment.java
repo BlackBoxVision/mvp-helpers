@@ -80,12 +80,12 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter> impl
     @Override
     public void onPresenterCreated(@NonNull TaskListPresenter presenter) {
         presenter.attachView(this);
-        presenter.requestTaskList();
+        presenter.getTasks();
     }
 
     public void handleNewTaskButtonClick(@NonNull View v) {
         if (null != getPresenter()) {
-            getPresenter().createNewTask();
+            getPresenter().newTask();
         }
     }
 
@@ -121,9 +121,9 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter> impl
 
     @Override
     public void onTaskListError(@NonNull Throwable error) {
-        final String msg = error.getMessage();
+        final String errorMessage = error.getMessage();
 
-        switch (msg) {
+        switch (errorMessage) {
             case TaskException.EMPTY_LIST:
                 int drawableColor = ContextCompat.getColor(getApplicationContext(), R.color.colorAccent);
 

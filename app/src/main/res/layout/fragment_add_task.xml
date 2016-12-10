@@ -6,10 +6,4 @@
     tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
     tools:showIn="@layout/activity_add_task">
 
-    <Button
-        android:text="¡Click me!"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sample_button" />
-
 </RelativeLayout>

@@ -26,7 +26,7 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
         taskListInteractor = null;
     }
 
-    public void requestTaskList() {
+    public void getTasks() {
         if (isViewAttached()) {
             getView().hideTaskList();
             getView().showProgress();
@@ -35,7 +35,7 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
         }
     }
 
-    public void createNewTask() {
+    public void newTask() {
         if (isViewAttached()) {
             getView().onNewTaskRequest();
         }
