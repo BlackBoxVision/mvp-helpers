@@ -48,7 +48,6 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public static final String TASK_ID = "TASK_ID";
 
     private static final String MODE_CREATE = "create";
-    private static final String MODE_VIEW = "view";
     private static final String MODE_EDIT = "edit";
 
     TaskListAdapter taskListAdapter;
@@ -202,7 +201,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         final Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
 
         intent.putExtra(TASK_ID, id);
-        intent.putExtra(LAUNCH_MODE, MODE_VIEW);
+        intent.putExtra(LAUNCH_MODE, MODE_EDIT);
 
         startActivity(intent);
     }

@@ -2,14 +2,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
+    tools:showIn="@layout/activity_add_task">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
-        tools:showIn="@layout/activity_add_task">
+        android:padding="@dimen/activity_horizontal_margin">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/titleInputLayout"
@@ -23,9 +23,6 @@
                 android:id="@+id/titleEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_title_black_24dp"
-                android:drawableStart="@drawable/ic_title_black_24dp"
-                android:drawablePadding="8dp"
                 android:inputType="text"
                 android:hint="@string/title"/>
 
@@ -41,9 +38,6 @@
                 android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_description_black_24dp"
-                android:drawableStart="@drawable/ic_description_black_24dp"
-                android:drawablePadding="8dp"
                 android:inputType="textLongMessage"
                 android:hint="@string/description"/>
 
@@ -59,9 +53,6 @@
                 android:id="@+id/startDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_date_range_black_24dp"
-                android:drawableStart="@drawable/ic_date_range_black_24dp"
-                android:drawablePadding="8dp"
                 android:inputType="date"
                 android:hint="@string/start_date"/>
 
@@ -77,9 +68,6 @@
                 android:id="@+id/dueDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_date_range_black_24dp"
-                android:drawableStart="@drawable/ic_date_range_black_24dp"
-                android:drawablePadding="8dp"
                 android:inputType="date"
                 android:hint="@string/due_date"/>
 

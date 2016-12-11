@@ -1,6 +1,7 @@
 package io.blackbox_vision.helpers.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.DateUtils;
+import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.factory.AddTaskPresenterFactory;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.helpers.logic.presenter.AddTaskPresenter;
@@ -27,7 +29,6 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     public static final String TASK_ID = "TASK_ID";
 
     private static final String MODE_CREATE = "create";
-    private static final String MODE_VIEW = "view";
     private static final String MODE_EDIT = "edit";
 
     @BindView(R.id.titleEditText)
@@ -51,6 +52,20 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         taskButton.setOnClickListener(this::handleTaskButtonClick);
+
+        Drawable titleDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_title_black_24dp);
+        Drawable descriptionDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_description_black_24dp);
+        Drawable dateDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_date_range_black_24dp);
+
+        titleEditText.setCompoundDrawablesWithIntrinsicBounds(titleDrawable, null, null, null);
+        descriptionEditText.setCompoundDrawablesWithIntrinsicBounds(descriptionDrawable, null, null, null);
+        startDateEditText.setCompoundDrawablesWithIntrinsicBounds(dateDrawable, null, null, null);
+        dueDateEditText.setCompoundDrawablesWithIntrinsicBounds(dateDrawable, null, null, null);
+
+        titleEditText.setCompoundDrawablePadding(8);
+        descriptionEditText.setCompoundDrawablePadding(8);
+        startDateEditText.setCompoundDrawablePadding(8);
+        dueDateEditText.setCompoundDrawablePadding(8);
     }
 
     private void handleTaskButtonClick(@NonNull View view) {
@@ -68,25 +83,6 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
                 }
 
                 break;
-
-            case MODE_VIEW:
-                titleEditText.setEnabled(true);
-                descriptionEditText.setEnabled(true);
-                startDateEditText.setEnabled(true);
-                dueDateEditText.setEnabled(true);
-
-                titleEditText.setFocusable(true);
-                descriptionEditText.setFocusable(true);
-                startDateEditText.setFocusable(true);
-                dueDateEditText.setFocusable(true);
-
-                titleEditText.setFocusableInTouchMode(true);
-                descriptionEditText.setFocusableInTouchMode(true);
-                startDateEditText.setFocusableInTouchMode(true);
-                dueDateEditText.setFocusableInTouchMode(true);
-
-                launchMode = MODE_EDIT;
-                taskButton.setText(R.string.update_task);
         }
     }
 
@@ -114,11 +110,6 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
             final Long taskId = intent.getLongExtra(TASK_ID, -1L);
 
             switch (launchMode) {
-                case MODE_VIEW:
-                    actionBar.setTitle(R.string.view_task);
-                    taskButton.setText(R.string.edit_task);
-                    break;
-
                 case MODE_EDIT:
                     actionBar.setTitle(R.string.edit_task);
                     taskButton.setText(R.string.update_task);
@@ -164,38 +155,21 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
 
     @Override
     public void onTaskFound(@NonNull Task task) {
-        if (launchMode.equals(MODE_VIEW)) {
-            String startDate = "";
-            String dueDate = "";
+        String startDate = "";
+        String dueDate = "";
 
-            if (null != task.getStartDate()) {
-                startDate = DateUtils.formatWithDefaults(task.getStartDate());
-            }
-
-            if (null != task.getDueDate()) {
-                dueDate = DateUtils.formatWithDefaults(task.getDueDate());
-            }
-
-            titleEditText.setText(task.getTitle());
-            descriptionEditText.setText(task.getDescription());
-            startDateEditText.setText(startDate);
-            dueDateEditText.setText(dueDate);
-
-            titleEditText.setEnabled(false);
-            descriptionEditText.setEnabled(false);
-            startDateEditText.setEnabled(false);
-            dueDateEditText.setEnabled(false);
-
-            titleEditText.setFocusable(false);
-            descriptionEditText.setFocusable(false);
-            startDateEditText.setFocusable(false);
-            dueDateEditText.setFocusable(false);
-
-            titleEditText.setFocusableInTouchMode(false);
-            descriptionEditText.setFocusableInTouchMode(false);
-            startDateEditText.setFocusableInTouchMode(false);
-            dueDateEditText.setFocusableInTouchMode(false);
+        if (null != task.getStartDate()) {
+            startDate = DateUtils.formatWithDefaults(task.getStartDate());
         }
+
+        if (null != task.getDueDate()) {
+            dueDate = DateUtils.formatWithDefaults(task.getDueDate());
+        }
+
+        titleEditText.setText(task.getTitle());
+        descriptionEditText.setText(task.getDescription());
+        startDateEditText.setText(startDate);
+        dueDateEditText.setText(dueDate);
     }
 
     @Override
