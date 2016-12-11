@@ -14,6 +14,10 @@ public interface TaskListView extends BaseView {
 
     void onTaskListError(@NonNull Throwable error);
 
+    void onTasksRemoved();
+
+    void onTasksNotRemoved(@NonNull Throwable error);
+
     void onNewTaskRequest();
 
     void onTaskDetailRequest(@NonNull Long id);

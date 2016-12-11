@@ -1,6 +1,7 @@
 package io.blackbox_vision.helpers.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.blackbox_vision.helpers.R;
+import io.blackbox_vision.helpers.helper.DateUtils;
+import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.model.Task;
 
 
@@ -37,8 +40,47 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Task task = items.get(position);
 
+        String title = context.getText(R.string.title) + ": ";
+        String description = context.getText(R.string.description) + ": ";
+        String startDate = context.getText(R.string.start_date) + ": ";
+        String dueDate = context.getText(R.string.due_date) + ": ";
+
+        if (null != task.getTitle()) {
+            title += task.getTitle();
+        }
+
+        if (null != task.getDescription()) {
+            description += task.getDescription();
+        }
+
+        if (null != task.getStartDate()) {
+            startDate += DateUtils.formatWithDefaults(task.getStartDate());
+        }
+
+        if (null != task.getDueDate()) {
+            dueDate += DateUtils.formatWithDefaults(task.getDueDate());
+        }
+
+        Drawable titleDrawable = DrawableUtils.applyColorFilter(context, R.drawable.ic_title_black_24dp);
+        Drawable descriptionDrawable = DrawableUtils.applyColorFilter(context, R.drawable.ic_description_black_24dp);
+        Drawable dateDrawable = DrawableUtils.applyColorFilter(context, R.drawable.ic_date_range_black_24dp);
+
         holder.itemView.setOnClickListener((v) -> onItemSelectedListener.onItemSelected(v, task, position));
-        holder.textItem.setText(task.getTitle());
+
+        holder.titleTextView.setCompoundDrawablesWithIntrinsicBounds(titleDrawable, null, null, null);
+        holder.descriptionTextView.setCompoundDrawablesWithIntrinsicBounds(descriptionDrawable, null, null, null);
+        holder.startDateTextView.setCompoundDrawablesWithIntrinsicBounds(dateDrawable, null, null, null);
+        holder.dueDateTextView.setCompoundDrawablesWithIntrinsicBounds(dateDrawable, null, null, null);
+
+        holder.titleTextView.setCompoundDrawablePadding(8);
+        holder.descriptionTextView.setCompoundDrawablePadding(8);
+        holder.startDateTextView.setCompoundDrawablePadding(8);
+        holder.dueDateTextView.setCompoundDrawablePadding(8);
+
+        holder.titleTextView.setText(title);
+        holder.descriptionTextView.setText(description);
+        holder.startDateTextView.setText(startDate);
+        holder.dueDateTextView.setText(dueDate);
     }
 
     @Override
@@ -57,8 +99,17 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.textItem)
-        TextView textItem;
+        @BindView(R.id.titleTextView)
+        TextView titleTextView;
+
+        @BindView(R.id.descriptionTextView)
+        TextView descriptionTextView;
+
+        @BindView(R.id.startDateTextView)
+        TextView startDateTextView;
+
+        @BindView(R.id.dueDateTextView)
+        TextView dueDateTextView;
 
         public ViewHolder(@NonNull View view) {
             super(view);

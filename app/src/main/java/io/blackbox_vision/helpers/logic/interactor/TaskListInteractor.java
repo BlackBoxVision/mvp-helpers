@@ -12,7 +12,7 @@ import io.blackbox_vision.mvphelpers.logic.listener.OnSuccessListener;
 
 
 public final class TaskListInteractor extends BaseInteractor {
-    private static final Long DELAY_IN_MILLIS = 2000L;
+    private static final Long DELAY_IN_MILLIS = 750L;
     private static TaskListInteractor taskListInteractor;
 
     private TaskListInteractor() { }
@@ -26,6 +26,18 @@ public final class TaskListInteractor extends BaseInteractor {
                 runOnUiThread(() -> successListener.onSuccess(tasks), DELAY_IN_MILLIS);
             } else {
                 runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.EMPTY_LIST)), DELAY_IN_MILLIS);
+            }
+        });
+    }
+
+    public void removeTasks(@NonNull OnErrorListener<Throwable> errorListener, @NonNull OnSuccessListener<Integer> successListener) {
+        runOnBackground(() -> {
+            int count = Task.deleteAll(Task.class);
+
+            if (count > 0) {
+                runOnUiThread(() -> successListener.onSuccess(count));
+            } else {
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.CANNOT_DELETE_ALL_TASKS)));
             }
         });
     }

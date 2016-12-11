@@ -1,9 +1,102 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_horizontal_margin"
-    tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
-    tools:showIn="@layout/activity_add_task">
+    android:layout_height="match_parent">
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
+        tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
+        tools:showIn="@layout/activity_add_task">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/titleInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/titleEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_title_black_24dp"
+                android:drawableStart="@drawable/ic_title_black_24dp"
+                android:drawablePadding="8dp"
+                android:inputType="text"
+                android:hint="@string/title"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/descriptionInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_description_black_24dp"
+                android:drawableStart="@drawable/ic_description_black_24dp"
+                android:drawablePadding="8dp"
+                android:inputType="textLongMessage"
+                android:hint="@string/description"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/startDateInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/startDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                android:drawableStart="@drawable/ic_date_range_black_24dp"
+                android:drawablePadding="8dp"
+                android:inputType="date"
+                android:hint="@string/start_date"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dueDateInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/startDateInputLayout">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/dueDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                android:drawableStart="@drawable/ic_date_range_black_24dp"
+                android:drawablePadding="8dp"
+                android:inputType="date"
+                android:hint="@string/due_date"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/taskButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dueDateInputLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:theme="@style/AppTheme.ButtonStyle"
+            tools:text="Create Task"/>
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">Tasks Manager</string>
-    <string name="error_empty_list">No tasks added yet</string>
 
     <string name="create_task">Create Task</string>
     <string name="edit_task">Edit Task</string>
+    <string name="view_task">View Task</string>
+    <string name="update_task">Update Task</string>
+
+    <string name="title"><b><i>Title</i></b></string>
+    <string name="description"><b><i>Description</i></b></string>
+    <string name="start_date"><b><i>Start date</i></b></string>
+    <string name="due_date"><b><i>Due date</i></b></string>
+
+    <string name="search">Search..</string>
+
+    <string name="empty_task_list">No tasks added yet</string>
 </resources>

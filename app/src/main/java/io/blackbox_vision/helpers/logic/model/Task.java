@@ -8,8 +8,9 @@ import java.util.Date;
 public final class Task extends SugarRecord {
     private String title;
     private String description;
-    private Date initialDate;
-    private Date endDate;
+    private Date startDate;
+    private Date dueDate;
+    private boolean isCompleted;
 
     public String getTitle() {
         return title;
@@ -29,32 +30,40 @@ public final class Task extends SugarRecord {
         return this;
     }
 
-    public Date getInitialDate() {
-        return initialDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public Task setInitialDate(Date initialDate) {
-        this.initialDate = initialDate;
+    public Task setStartDate(Date startDate) {
+        this.startDate = startDate;
         return this;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public Task setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public Task setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+        return this;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public Task setCompleted(boolean completed) {
+        isCompleted = completed;
         return this;
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "id=" + getId() +
-                ", title='" + title + '\'' +
+                "title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", initialDate=" + initialDate +
-                ", endDate=" + endDate +
+                ", startDate=" + startDate +
+                ", dueDate=" + dueDate +
                 '}';
     }
 }

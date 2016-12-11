@@ -35,6 +35,15 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
         }
     }
 
+    public void removeAllTasks() {
+        if (isViewAttached()) {
+            getView().hideTaskList();
+            getView().showProgress();
+
+            taskListInteractor.removeTasks(this::onTasksNotRemoved, this::onTasksRemoved);
+        }
+    }
+
     public void newTask() {
         if (isViewAttached()) {
             getView().onNewTaskRequest();
@@ -44,6 +53,21 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
     public void showTask(@NonNull Long id) {
         if (isViewAttached()) {
             getView().onTaskDetailRequest(id);
+        }
+    }
+
+    private void onTasksRemoved(@NonNull Integer count) {
+        if (isViewAttached()) {
+            getView().hideProgress();
+            getView().showErrorView();
+            getView().onTasksRemoved();
+        }
+    }
+
+    private void onTasksNotRemoved(@NonNull Throwable error) {
+        if (isViewAttached()) {
+            getView().hideProgress();
+            getView().onTasksNotRemoved(error);
         }
     }
 

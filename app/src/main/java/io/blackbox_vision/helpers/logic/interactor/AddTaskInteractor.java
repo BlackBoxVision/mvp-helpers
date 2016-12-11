@@ -51,6 +51,14 @@ public final class AddTaskInteractor extends BaseInteractor {
         runOnBackground(() -> {
             Task task = Task.findById(Task.class, id);
 
+            if (null == task.getTitle()) {
+                task.setTitle("");
+            }
+
+            if (null == task.getDescription()) {
+                task.setDescription("");
+            }
+
             if (null != id) {
                 runOnUiThread(() -> successListener.onSuccess(task));
             } else {
