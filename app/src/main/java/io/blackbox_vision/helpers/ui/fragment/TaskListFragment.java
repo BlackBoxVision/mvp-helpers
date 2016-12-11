@@ -194,6 +194,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         intent.putExtra(LAUNCH_MODE, MODE_CREATE);
 
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
@@ -204,6 +205,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         intent.putExtra(LAUNCH_MODE, MODE_EDIT);
 
         startActivity(intent);
+        getActivity().finish();
     }
 
     @Override
@@ -212,16 +214,12 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     }
 
     @Override
-    public void onTaskListError(@NonNull Throwable error) {
-        final String errorMessage = error.getMessage();
-
-        switch (errorMessage) {
+    public void onError(@NonNull Throwable error) {
+        switch (error.getMessage()) {
             case TaskException.EMPTY_LIST:
-                final Drawable d = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
-
-                errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
-                errorTextView.setText(getString(R.string.empty_task_list));
-                errorTextView.setTextSize(16F);
+                if (null != getPresenter()) {
+                    getPresenter().showEmptyView();
+                }
 
                 break;
         }
@@ -229,16 +227,9 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @Override
     public void onTasksRemoved() {
-        final Drawable d = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
-
-        errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
-        errorTextView.setText(getString(R.string.empty_task_list));
-        errorTextView.setTextSize(16F);
-    }
-
-    @Override
-    public void onTasksNotRemoved(@NonNull Throwable error) {
-
+        if (null != getPresenter()) {
+            getPresenter().showEmptyView();
+        }
     }
 
     @Override
@@ -264,5 +255,14 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     @Override
     public void showErrorView() {
         errorTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showEmptyView() {
+        final Drawable d = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_assignment_turned_in_black_48dp);
+
+        errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+        errorTextView.setText(getString(R.string.empty_task_list));
+        errorTextView.setTextSize(16F);
     }
 }

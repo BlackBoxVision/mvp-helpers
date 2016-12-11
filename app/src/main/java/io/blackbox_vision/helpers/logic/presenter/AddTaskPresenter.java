@@ -46,15 +46,35 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
         }
     }
 
+    public void updateViewByMode() {
+        if (isViewAttached()) {
+            getView().updateViewByLaunchMode();
+        }
+    }
+
+    public void removeTask() {
+        if (isViewAttached()) {
+            final Task task = getView().getTask();
+
+            addTaskInteractor.removeTask(task, this::onError, this::onTaskDeleted);
+        }
+    }
+
+    private void onTaskDeleted(@NonNull Boolean deleted) {
+        if (isViewAttached()) {
+            getView().goBack();
+        }
+    }
+
     private void onTaskUpdated(@NonNull Task task) {
         if (isViewAttached()) {
-            getView().onTaskUpdated(task);
+            getView().goBack();
         }
     }
 
     private void onTaskCreated(@NonNull Task task) {
         if (isViewAttached()) {
-            getView().onTaskCreated(task);
+            getView().goBack();
         }
     }
 

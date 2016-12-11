@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +23,7 @@ import io.blackbox_vision.helpers.logic.factory.AddTaskPresenterFactory;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.helpers.logic.presenter.AddTaskPresenter;
 import io.blackbox_vision.helpers.logic.view.AddTaskView;
+import io.blackbox_vision.helpers.ui.activity.TaskListActivity;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
@@ -47,10 +51,12 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     Button taskButton;
 
     private String launchMode;
+    private Long taskId;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setHasOptionsMenu(true);
         taskButton.setOnClickListener(this::handleTaskButtonClick);
 
         Drawable titleDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_title_black_24dp);
@@ -66,6 +72,32 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
         descriptionEditText.setCompoundDrawablePadding(8);
         startDateEditText.setCompoundDrawablePadding(8);
         dueDateEditText.setCompoundDrawablePadding(8);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.task_menu, menu);
+
+        if (launchMode.equals(MODE_CREATE)) {
+            MenuItem item = menu.getItem(0);
+            item.setVisible(false);
+        }
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                if (null != getPresenter()) {
+                    getPresenter().removeTask();
+                }
+
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void handleTaskButtonClick(@NonNull View view) {
@@ -101,13 +133,38 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     @Override
     public void onPresenterCreated(@NonNull AddTaskPresenter presenter) {
         presenter.attachView(this);
+        presenter.updateViewByMode();
+    }
 
+    @Override
+    public Task getTask() {
+        final String title = titleEditText.getText().toString().trim();
+        final String description = descriptionEditText.getText().toString().trim();
+        final String startDate = startDateEditText.getText().toString().trim();
+        final String dueDate = dueDateEditText.getText().toString().trim();
+
+        Task task = new Task()
+                .setTitle(title)
+                .setDescription(description)
+                .setStartDate(DateUtils.fromString(startDate, "/"))
+                .setDueDate(DateUtils.fromString(dueDate, "/"))
+                .setCompleted(false);
+
+        if (taskId != null) {
+            task.setId(taskId);
+        }
+
+        return task;
+    }
+
+    @Override
+    public void updateViewByLaunchMode() {
         final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         final Intent intent = getActivity().getIntent();
 
         if (null != intent && null != actionBar) {
             launchMode = intent.getStringExtra(LAUNCH_MODE);
-            final Long taskId = intent.getLongExtra(TASK_ID, -1L);
+            taskId = intent.getLongExtra(TASK_ID, -1L);
 
             switch (launchMode) {
                 case MODE_EDIT:
@@ -122,35 +179,10 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
                     break;
             }
 
-            if (taskId != -1L) {
-                presenter.findTaskById(taskId);
+            if (taskId != -1L && null != getPresenter()) {
+                getPresenter().findTaskById(taskId);
             }
         }
-    }
-
-    @Override
-    public Task getTask() {
-        final String title = titleEditText.getText().toString().trim();
-        final String description = descriptionEditText.getText().toString().trim();
-        final String startDate = startDateEditText.getText().toString().trim();
-        final String dueDate = dueDateEditText.getText().toString().trim();
-
-        return new Task()
-                .setTitle(title)
-                .setDescription(description)
-                .setStartDate(DateUtils.fromString(startDate, "/"))
-                .setDueDate(DateUtils.fromString(dueDate, "/"))
-                .setCompleted(false);
-    }
-
-    @Override
-    public void onTaskCreated(@NonNull Task task) {
-
-    }
-
-    @Override
-    public void onTaskUpdated(@NonNull Task task) {
-
     }
 
     @Override
@@ -159,17 +191,24 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
         String dueDate = "";
 
         if (null != task.getStartDate()) {
-            startDate = DateUtils.formatWithDefaults(task.getStartDate());
+            startDate = DateUtils.formatDate(task.getStartDate());
         }
 
         if (null != task.getDueDate()) {
-            dueDate = DateUtils.formatWithDefaults(task.getDueDate());
+            dueDate = DateUtils.formatDate(task.getDueDate());
         }
 
         titleEditText.setText(task.getTitle());
         descriptionEditText.setText(task.getDescription());
         startDateEditText.setText(startDate);
         dueDateEditText.setText(dueDate);
+    }
+
+    @Override
+    public void goBack() {
+        Intent intent = new Intent(getApplicationContext(), TaskListActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
     @Override

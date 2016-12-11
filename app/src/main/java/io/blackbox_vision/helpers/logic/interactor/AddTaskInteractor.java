@@ -67,6 +67,20 @@ public final class AddTaskInteractor extends BaseInteractor {
         });
     }
 
+    public void removeTask(@NonNull Task task,
+                           @NonNull OnErrorListener<Throwable> errorListener,
+                           @NonNull OnSuccessListener<Boolean> successListener) {
+        runOnBackground(() -> {
+            boolean deleted = Task.delete(task);
+
+            if (deleted) {
+                runOnUiThread(() -> successListener.onSuccess(deleted));
+            } else {
+                runOnUiThread(() -> errorListener.onError(new TaskException(TaskException.CANNOT_DELETE_TASK)));
+            }
+        });
+    }
+
     public static AddTaskInteractor newInstance() {
         if (null == addTaskInteractor) {
             addTaskInteractor = new AddTaskInteractor();

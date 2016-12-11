@@ -21,6 +21,7 @@ public final class TaskListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
         ButterKnife.bind(this);
+        toolbar.setTitle(R.string.view_tasks);
         setSupportActionBar(toolbar);
     }
 }

@@ -3,8 +3,8 @@
 
     <string name="create_task">Create Task</string>
     <string name="edit_task">Edit Task</string>
-    <string name="view_task">View Task</string>
     <string name="update_task">Update Task</string>
+    <string name="view_tasks">View Tasks</string>
 
     <string name="title"><b><i>Title</i></b></string>
     <string name="description"><b><i>Description</i></b></string>

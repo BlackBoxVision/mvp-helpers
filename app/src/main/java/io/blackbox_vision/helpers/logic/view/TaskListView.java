@@ -5,18 +5,15 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.mvphelpers.logic.listener.OnErrorListener;
 import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 
 
-public interface TaskListView extends BaseView {
+public interface TaskListView extends BaseView, OnErrorListener<Throwable> {
 
     void onTaskListFetched(@NonNull List<Task> tasks);
 
-    void onTaskListError(@NonNull Throwable error);
-
     void onTasksRemoved();
-
-    void onTasksNotRemoved(@NonNull Throwable error);
 
     void onNewTaskRequest();
 
@@ -31,4 +28,6 @@ public interface TaskListView extends BaseView {
     void hideTaskList();
 
     void showErrorView();
+
+    void showEmptyView();
 }

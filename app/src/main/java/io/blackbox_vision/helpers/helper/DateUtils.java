@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -26,7 +27,7 @@ public final class DateUtils {
         return dateString;
     }
 
-    public static String formatWithDefaults(@NonNull Date dateToFormat) {
+    public static String formatDate(@NonNull Date dateToFormat) {
         return formatDate("dd/MM/yyyy", Locale.getDefault(), dateToFormat);
     }
 
@@ -35,8 +36,14 @@ public final class DateUtils {
 
         final int year = Integer.valueOf(datePieces[2]);
         final int month = Integer.valueOf(datePieces[1]);
-        final int date = Integer.valueOf(datePieces[0]);
+        final int dayOfMonth = Integer.valueOf(datePieces[0]);
 
-        return new Date(year, month, date);
+        final Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        return calendar.getTime();
     }
 }

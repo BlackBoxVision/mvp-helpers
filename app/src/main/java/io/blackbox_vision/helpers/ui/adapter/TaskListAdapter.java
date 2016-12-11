@@ -54,11 +54,11 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
         }
 
         if (null != task.getStartDate()) {
-            startDate += DateUtils.formatWithDefaults(task.getStartDate());
+            startDate += DateUtils.formatDate(task.getStartDate());
         }
 
         if (null != task.getDueDate()) {
-            dueDate += DateUtils.formatWithDefaults(task.getDueDate());
+            dueDate += DateUtils.formatDate(task.getDueDate());
         }
 
         Drawable titleDrawable = DrawableUtils.applyColorFilter(context, R.drawable.ic_title_black_24dp);

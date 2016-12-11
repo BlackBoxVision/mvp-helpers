@@ -8,6 +8,7 @@ public final class TaskException extends Exception {
     public static final String CANNOT_CREATE_TASK = "CANNOT CREATE TASK";
     public static final String CANNOT_UPDATE_TASK = "CANNOT UPDATE TASK";
     public static final String CANNOT_DELETE_ALL_TASKS = "CANNOT DELETE ALL TASKS";
+    public static final String CANNOT_DELETE_TASK = "CANNOT DELETE TASK";
 
     public TaskException(@NonNull String message) {
         super(message);

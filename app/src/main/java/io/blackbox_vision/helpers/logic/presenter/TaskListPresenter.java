@@ -67,7 +67,7 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
     private void onTasksNotRemoved(@NonNull Throwable error) {
         if (isViewAttached()) {
             getView().hideProgress();
-            getView().onTasksNotRemoved(error);
+            getView().onError(error);
         }
     }
 
@@ -83,7 +83,13 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
         if (isViewAttached()) {
             getView().hideProgress();
             getView().showErrorView();
-            getView().onTaskListError(error);
+            getView().onError(error);
+        }
+    }
+
+    public void showEmptyView() {
+        if (isViewAttached()) {
+            getView().showEmptyView();
         }
     }
 
