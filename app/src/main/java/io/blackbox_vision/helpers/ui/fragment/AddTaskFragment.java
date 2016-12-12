@@ -6,15 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import butterknife.BindView;
 import io.blackbox_vision.helpers.R;
@@ -37,16 +36,16 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     private static final String MODE_EDIT = "edit";
 
     @BindView(R.id.titleEditText)
-    EditText titleEditText;
+    TextInputEditText titleEditText;
 
     @BindView(R.id.descriptionEditText)
-    EditText descriptionEditText;
+    TextInputEditText descriptionEditText;
 
     @BindView(R.id.startDateEditText)
-    EditText startDateEditText;
+    TextInputEditText startDateEditText;
 
     @BindView(R.id.dueDateEditText)
-    EditText dueDateEditText;
+    TextInputEditText dueDateEditText;
 
     @BindView(R.id.taskButton)
     Button taskButton;
@@ -167,8 +166,6 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
             launchMode = intent.getStringExtra(LAUNCH_MODE);
             taskId = intent.getLongExtra(TASK_ID, -1L);
 
-            Log.i(AddTaskFragment.class.getSimpleName(), "This is the taskID -> " + taskId);
-
             switch (launchMode) {
                 case MODE_EDIT:
                     actionBar.setTitle(R.string.edit_task);
@@ -183,7 +180,6 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
             }
 
             if (taskId != -1L && null != getPresenter()) {
-                Log.i(AddTaskFragment.class.getSimpleName(), "Calling findTaskByID" + taskId);
                 getPresenter().findTaskById(taskId);
             }
         }
