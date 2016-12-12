@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import io.blackbox_vision.helpers.R;
+import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.error.TaskException;
 import io.blackbox_vision.helpers.logic.factory.TaskListPresenterFactory;
@@ -44,13 +46,7 @@ import static android.support.v7.widget.SearchView.*;
 public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         implements TaskListView, OnQueryTextListener, OnActionExpandListener {
 
-    public static final String LAUNCH_MODE = "LAUNCH_MODE";
-    public static final String TASK_ID = "TASK_ID";
-
-    private static final String MODE_CREATE = "create";
-    private static final String MODE_EDIT = "edit";
-
-    TaskListAdapter taskListAdapter;
+    private TaskListAdapter taskListAdapter;
 
     @BindView(R.id.taskListView)
     RecyclerView taskListView;
@@ -63,6 +59,10 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @BindView(R.id.errorTextView)
     TextView errorTextView;
+
+    public TaskListFragment() {
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -77,14 +77,6 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         taskListView.setHasFixedSize(true);
 
         taskListAdapter.notifyDataSetChanged();
-
-        newTaskButton.setOnClickListener(this::handleNewTaskButtonClick);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -175,7 +167,8 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         presenter.getTasks();
     }
 
-    public void handleNewTaskButtonClick(@NonNull View v) {
+    @OnClick(R.id.newTaskButton)
+    public void onClick(@NonNull View v) {
         if (null != getPresenter()) {
             getPresenter().newTask();
         }
@@ -191,7 +184,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public void onNewTaskRequest() {
         final Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
 
-        intent.putExtra(LAUNCH_MODE, MODE_CREATE);
+        intent.putExtra(AppConstants.LAUNCH_MODE, AppConstants.MODE_CREATE);
 
         startActivity(intent);
         getActivity().finish();
@@ -201,8 +194,8 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public void onTaskDetailRequest(@NonNull Long id) {
         final Intent intent = new Intent(getApplicationContext(), AddTaskActivity.class);
 
-        intent.putExtra(LAUNCH_MODE, MODE_EDIT);
-        intent.putExtra(TASK_ID, id);
+        intent.putExtra(AppConstants.LAUNCH_MODE, AppConstants.MODE_EDIT);
+        intent.putExtra(AppConstants.TASK_ID, id);
 
         startActivity(intent);
         getActivity().finish();
@@ -255,6 +248,11 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     @Override
     public void showErrorView() {
         errorTextView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideErrorView() {
+        errorTextView.setVisibility(View.INVISIBLE);
     }
 
     @Override

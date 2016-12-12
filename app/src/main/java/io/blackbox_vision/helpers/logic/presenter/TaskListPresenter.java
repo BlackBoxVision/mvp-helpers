@@ -29,6 +29,7 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
     public void getTasks() {
         if (isViewAttached()) {
             getView().hideTaskList();
+            getView().hideErrorView();
             getView().showProgress();
 
             taskListInteractor.getTasks(this::onTaskListError, this::onTaskListFetched);

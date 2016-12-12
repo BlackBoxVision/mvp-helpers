@@ -41,9 +41,16 @@ public final class DateUtils {
         final Calendar calendar = Calendar.getInstance(Locale.getDefault());
 
         calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.MONTH, month - 1);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
         return calendar.getTime();
+    }
+
+    public static Calendar fromDate(@NonNull Date date) {
+        final Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        calendar.setTime(date);
+
+        return calendar;
     }
 }

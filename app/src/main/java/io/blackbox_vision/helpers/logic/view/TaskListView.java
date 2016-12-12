@@ -29,5 +29,7 @@ public interface TaskListView extends BaseView, OnErrorListener<Throwable> {
 
     void showErrorView();
 
+    void hideErrorView();
+
     void showEmptyView();
 }

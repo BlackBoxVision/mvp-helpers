@@ -14,4 +14,9 @@
     <string name="search">Search..</string>
 
     <string name="empty_task_list">No tasks added yet</string>
+    <string name="empty_title">Title shouldn\'t be empty</string>
+    <string name="empty_description">Description shouldn\'t be empty</string>
+    <string name="empty_start_date">Start date shouldn\'t be empty</string>
+    <string name="empty_due_date">Due date shouldn\'t be empty</string>
+
 </resources>

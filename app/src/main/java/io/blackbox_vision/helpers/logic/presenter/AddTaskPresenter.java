@@ -2,6 +2,9 @@ package io.blackbox_vision.helpers.logic.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.Calendar;
+
+import io.blackbox_vision.helpers.helper.DateUtils;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.helpers.logic.view.AddTaskView;
 import io.blackbox_vision.helpers.logic.interactor.AddTaskInteractor;
@@ -32,29 +35,43 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
 
     public void addNewTask() {
         if (isViewAttached()) {
-            final Task task = getView().getTask();
+            final String title = getView().getTitle();
+            final String description = getView().getDescription();
+            final String startDate = getView().getStartDate();
+            final String dueDate = getView().getDueDate();
 
-            addTaskInteractor.addNewTask(task, this::onError, this::onTaskCreated);
+            addTaskInteractor.addNewTask(title, description, startDate, dueDate, this::onError, this::onTaskCreated);
         }
     }
 
     public void updateTask() {
         if (isViewAttached()) {
-            final Task task = getView().getTask();
+            final Long taskId = getView().getTaskId();
+            final String title = getView().getTitle();
+            final String description = getView().getDescription();
+            final String startDate = getView().getStartDate();
+            final String dueDate = getView().getDueDate();
 
-            addTaskInteractor.updateTask(task, this::onError, this::onTaskUpdated);
+            addTaskInteractor.updateTask(taskId, title, description, startDate, dueDate, this::onError, this::onTaskUpdated);
         }
     }
 
-    public void updateViewByMode() {
+    public void findLaunchMode() {
         if (isViewAttached()) {
-            getView().updateViewByLaunchMode();
+            getView().onLaunchMode();
         }
     }
 
     public void removeTask() {
         if (isViewAttached()) {
-            final Task task = getView().getTask();
+            final Task task = new Task()
+                    .setTitle(getView().getTitle())
+                    .setDescription(getView().getDescription())
+                    .setStartDate(DateUtils.fromString(getView().getStartDate(), "/"))
+                    .setDueDate(DateUtils.fromString(getView().getDueDate(), "/"))
+                    .setCompleted(false);
+
+            task.setId(getView().getTaskId());
 
             addTaskInteractor.removeTask(task, this::onError, this::onTaskDeleted);
         }
@@ -80,7 +97,18 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
 
     private void onTaskFound(@NonNull Task task) {
         if (isViewAttached()) {
-            getView().onTaskFound(task);
+            getView().setTitle(task.getTitle());
+            getView().setDescription(task.getDescription());
+
+            final String formattedStartDate = DateUtils.formatDate(task.getStartDate());
+            final Calendar startDate = DateUtils.fromDate(task.getStartDate());
+
+            getView().setStartDate(formattedStartDate, startDate);
+
+            final String formattedDueDate = DateUtils.formatDate(task.getStartDate());
+            final Calendar dueDate = DateUtils.fromDate(task.getStartDate());
+
+            getView().setDueDate(formattedDueDate, dueDate);
         }
     }
 
