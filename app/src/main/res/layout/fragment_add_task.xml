@@ -40,7 +40,11 @@
                 android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textLongMessage"
+                android:gravity="top|start"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
+                android:maxLength="140"
+                android:lines="4"
                 android:hint="@string/description"/>
 
         </android.support.design.widget.TextInputLayout>

@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 
-public final class RecyclerViewScrollBehaviour extends RecyclerView.OnScrollListener {
+public final class RecyclerViewScrollBehavior extends RecyclerView.OnScrollListener {
     private final FloatingActionButton fab;
 
-    public RecyclerViewScrollBehaviour(@NonNull FloatingActionButton fab) {
+    public RecyclerViewScrollBehavior(@NonNull FloatingActionButton fab) {
         this.fab = fab;
     }
 

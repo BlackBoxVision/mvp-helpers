@@ -8,16 +8,16 @@
 
     <string name="title"><b><i>Title</i></b></string>
     <string name="description"><b><i>Description</i></b></string>
-    <string name="start_date"><b><i>Start date</i></b></string>
-    <string name="due_date"><b><i>Due date</i></b></string>
+    <string name="start_date"><b><i>From</i></b></string>
+    <string name="due_date"><b><i>To</i></b></string>
 
     <string name="search">Search..</string>
 
     <string name="empty_task_list">No tasks added yet</string>
     <string name="empty_title">Title shouldn\'t be empty</string>
     <string name="empty_description">Description shouldn\'t be empty</string>
-    <string name="empty_start_date">Start date shouldn\'t be empty</string>
-    <string name="empty_due_date">Due date shouldn\'t be empty</string>
+    <string name="empty_start_date">From date shouldn\'t be empty</string>
+    <string name="empty_due_date">To date shouldn\'t be empty</string>
     <string name="generic_error">Ups, something went wrong</string>
 
     <string name="dialog_delete_task">Are you sure you want to remove this task?</string>

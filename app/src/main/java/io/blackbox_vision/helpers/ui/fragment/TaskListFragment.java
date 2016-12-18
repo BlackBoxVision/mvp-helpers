@@ -37,7 +37,7 @@ import io.blackbox_vision.helpers.logic.presenter.TaskListPresenter;
 import io.blackbox_vision.helpers.logic.view.TaskListView;
 import io.blackbox_vision.helpers.ui.activity.AddTaskActivity;
 import io.blackbox_vision.helpers.ui.adapter.TaskListAdapter;
-import io.blackbox_vision.helpers.ui.behavior.RecyclerViewScrollBehaviour;
+import io.blackbox_vision.helpers.ui.behavior.RecyclerViewScrollBehavior;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
@@ -74,7 +74,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         taskListAdapter.setOnItemSelectedListener(this::handleItemSelected);
 
         taskListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        taskListView.addOnScrollListener(new RecyclerViewScrollBehaviour(newTaskButton));
+        taskListView.addOnScrollListener(new RecyclerViewScrollBehavior(newTaskButton));
         taskListView.setItemViewCacheSize(1024 * 24);
         taskListView.setAdapter(taskListAdapter);
         taskListView.setHasFixedSize(true);
