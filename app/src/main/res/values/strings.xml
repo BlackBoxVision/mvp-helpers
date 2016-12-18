@@ -26,4 +26,6 @@
 
     <string name="is_completed">Mark as Completed</string>
 
+    <string name="action_delete">delete</string>
+    <string name="action_delete_all">delete all</string>
 </resources>

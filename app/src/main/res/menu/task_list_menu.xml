@@ -5,13 +5,13 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
-        app:showAsAction="always|collapseActionView"
+        app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         android:title="@string/search"/>
 
     <item android:id="@+id/action_delete_all"
-        android:title="Delete"
+        android:title="@string/action_delete_all"
         android:icon="@drawable/ic_delete_forever_white_24dp"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
 </menu>
