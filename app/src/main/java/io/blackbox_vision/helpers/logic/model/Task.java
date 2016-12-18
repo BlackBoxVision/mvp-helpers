@@ -2,14 +2,12 @@ package io.blackbox_vision.helpers.logic.model;
 
 import com.orm.SugarRecord;
 
-import java.util.Date;
-
 
 public final class Task extends SugarRecord {
     private String title;
     private String description;
-    private Date startDate;
-    private Date dueDate;
+    private String startDate;
+    private String dueDate;
     private boolean isCompleted;
 
     public String getTitle() {
@@ -30,20 +28,20 @@ public final class Task extends SugarRecord {
         return this;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Task setStartDate(Date startDate) {
+    public Task setStartDate(String startDate) {
         this.startDate = startDate;
         return this;
     }
 
-    public Date getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public Task setDueDate(Date dueDate) {
+    public Task setDueDate(String dueDate) {
         this.dueDate = dueDate;
         return this;
     }

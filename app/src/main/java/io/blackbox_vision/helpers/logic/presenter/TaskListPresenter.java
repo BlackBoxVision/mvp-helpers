@@ -26,6 +26,10 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
         taskListInteractor = null;
     }
 
+    public Long getTasksCount() {
+        return isViewAttached()? taskListInteractor.getCount() : 0L;
+    }
+
     public void getTasks() {
         if (isViewAttached()) {
             getView().hideTaskList();

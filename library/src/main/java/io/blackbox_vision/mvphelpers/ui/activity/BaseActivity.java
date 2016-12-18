@@ -23,7 +23,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected Unbinder unbinder;
 
-    @Nullable
     protected P presenter;
 
     @Override
@@ -67,8 +66,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public abstract void onPresenterCreated(@NonNull P presenter);
 
-    @Nullable
     public P getPresenter() {
         return presenter;
+    }
+
+    public boolean isPresenterAvailable() {
+        return getPresenter() != null;
     }
 }

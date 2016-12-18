@@ -17,6 +17,10 @@ public final class TaskListInteractor extends BaseInteractor {
 
     private TaskListInteractor() { }
 
+    public Long getCount() {
+        return Task.count(Task.class);
+    }
+
     public void getTasks(@NonNull OnErrorListener<Throwable> errorListener,
                          @NonNull OnSuccessListener<List<Task>> successListener) {
         runOnBackground(() -> {

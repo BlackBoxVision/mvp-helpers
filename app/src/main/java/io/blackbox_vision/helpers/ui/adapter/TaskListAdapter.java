@@ -13,13 +13,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import io.blackbox_vision.helpers.R;
-import io.blackbox_vision.helpers.helper.DateUtils;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.model.Task;
 
 
 public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
+    private static final String DELIMITER = ": ";
+
     private OnItemSelectedListener<Task> onItemSelectedListener;
     private Context context;
     private List<Task> items;
@@ -40,10 +42,10 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Task task = items.get(position);
 
-        String title = context.getText(R.string.title) + ": ";
-        String description = context.getText(R.string.description) + ": ";
-        String startDate = context.getText(R.string.start_date) + ": ";
-        String dueDate = context.getText(R.string.due_date) + ": ";
+        String title = context.getText(R.string.title) + DELIMITER;
+        String description = context.getText(R.string.description) + DELIMITER;
+        String startDate = context.getText(R.string.start_date) + DELIMITER;
+        String dueDate = context.getText(R.string.due_date) + DELIMITER;
 
         if (null != task.getTitle()) {
             title += task.getTitle();
@@ -54,11 +56,11 @@ public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.
         }
 
         if (null != task.getStartDate()) {
-            startDate += DateUtils.formatDate(task.getStartDate());
+            startDate += task.getStartDate();
         }
 
         if (null != task.getDueDate()) {
-            dueDate += DateUtils.formatDate(task.getDueDate());
+            dueDate += task.getDueDate();
         }
 
         Drawable titleDrawable = DrawableUtils.applyColorFilter(context, R.drawable.ic_title_black_24dp);

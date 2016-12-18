@@ -3,6 +3,7 @@ package io.blackbox_vision.helpers.logic.presenter;
 import android.support.annotation.NonNull;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import io.blackbox_vision.helpers.helper.DateUtils;
 import io.blackbox_vision.helpers.logic.model.Task;
@@ -35,24 +36,33 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
 
     public void addNewTask() {
         if (isViewAttached()) {
-            final String title = getView().getTitle();
-            final String description = getView().getDescription();
-            final String startDate = getView().getStartDate();
-            final String dueDate = getView().getDueDate();
+            final Task task = new Task()
+                    .setTitle(getView().getTitle())
+                    .setDescription(getView().getDescription())
+                    .setStartDate(getView().getStartDate())
+                    .setDueDate(getView().getDueDate())
+                    .setCompleted(false);
 
-            addTaskInteractor.addNewTask(title, description, startDate, dueDate, this::onError, this::onTaskCreated);
+            addTaskInteractor.addNewTask(task, this::onError, this::onTaskCreated);
         }
     }
 
     public void updateTask() {
         if (isViewAttached()) {
-            final Long taskId = getView().getTaskId();
-            final String title = getView().getTitle();
-            final String description = getView().getDescription();
-            final String startDate = getView().getStartDate();
-            final String dueDate = getView().getDueDate();
+            final Task task = new Task()
+                    .setTitle(getView().getTitle())
+                    .setDescription(getView().getDescription())
+                    .setStartDate(getView().getStartDate())
+                    .setDueDate(getView().getDueDate())
+                    .setCompleted(false);
 
-            addTaskInteractor.updateTask(taskId, title, description, startDate, dueDate, this::onError, this::onTaskUpdated);
+            final Long taskId = getView().getTaskId();
+
+            if (taskId != -1L) {
+                task.setId(taskId);
+            }
+
+            addTaskInteractor.updateTask(task, this::onError, this::onTaskUpdated);
         }
     }
 
@@ -67,11 +77,15 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
             final Task task = new Task()
                     .setTitle(getView().getTitle())
                     .setDescription(getView().getDescription())
-                    .setStartDate(DateUtils.fromString(getView().getStartDate(), "/"))
-                    .setDueDate(DateUtils.fromString(getView().getDueDate(), "/"))
+                    .setStartDate(getView().getStartDate())
+                    .setDueDate(getView().getDueDate())
                     .setCompleted(false);
 
-            task.setId(getView().getTaskId());
+            final Long taskId = getView().getTaskId();
+
+            if (taskId != -1L) {
+                task.setId(taskId);
+            }
 
             addTaskInteractor.removeTask(task, this::onError, this::onTaskDeleted);
         }
@@ -100,15 +114,15 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
             getView().setTitle(task.getTitle());
             getView().setDescription(task.getDescription());
 
-            final String formattedStartDate = DateUtils.formatDate(task.getStartDate());
-            final Calendar startDate = DateUtils.fromDate(task.getStartDate());
+            final Date start = DateUtils.fromString(task.getStartDate(), "/");
+            final Calendar startDate = DateUtils.fromDate(start);
 
-            getView().setStartDate(formattedStartDate, startDate);
+            getView().setStartDate(task.getStartDate(), startDate);
 
-            final String formattedDueDate = DateUtils.formatDate(task.getStartDate());
-            final Calendar dueDate = DateUtils.fromDate(task.getStartDate());
+            final Date due = DateUtils.fromString(task.getStartDate(), "/");
+            final Calendar dueDate = DateUtils.fromDate(due);
 
-            getView().setDueDate(formattedDueDate, dueDate);
+            getView().setDueDate(task.getDueDate(), dueDate);
         }
     }
 

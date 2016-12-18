@@ -1,4 +1,4 @@
-package io.blackbox_vision.helpers.ui.behaviour;
+package io.blackbox_vision.helpers.ui.behavior;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;

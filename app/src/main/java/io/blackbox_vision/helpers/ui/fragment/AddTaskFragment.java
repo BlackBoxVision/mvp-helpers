@@ -1,6 +1,7 @@
 package io.blackbox_vision.helpers.ui.fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,9 +65,9 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Drawable titleDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_title_black_24dp);
-        Drawable descriptionDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_description_black_24dp);
-        Drawable dateDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_date_range_black_24dp);
+        final Drawable titleDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_title_black_24dp);
+        final Drawable descriptionDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_description_black_24dp);
+        final Drawable dateDrawable = DrawableUtils.applyColorFilter(getApplicationContext(), R.drawable.ic_date_range_black_24dp);
 
         titleEditText.setCompoundDrawablesWithIntrinsicBounds(titleDrawable, null, null, null);
         descriptionEditText.setCompoundDrawablesWithIntrinsicBounds(descriptionDrawable, null, null, null);
@@ -103,14 +105,38 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete:
-                if (null != getPresenter()) {
-                    getPresenter().removeTask();
+                if (isPresenterAvailable()) {
+                    final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.dialog_delete_task)
+                            .setPositiveButton(android.R.string.ok, this::onClick)
+                            .setNegativeButton(android.R.string.cancel, this::onClick)
+                            .create();
+
+                    dialog.show();
                 }
 
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClick(@NonNull DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                if (isPresenterAvailable()) {
+                    getPresenter().removeTask();
+                }
+
+                dialog.dismiss();
+
+                break;
+
+            case DialogInterface.BUTTON_NEGATIVE:
+                dialog.cancel();
+
+                break;
+        }
     }
 
     public void onFocusChange(View view, boolean isFocused) {
@@ -131,14 +157,14 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     public void onClick() {
         switch (launchMode) {
             case AppConstants.MODE_CREATE:
-                if (null != getPresenter()) {
+                if (isPresenterAvailable()) {
                     getPresenter().addNewTask();
                 }
 
                 break;
 
             case AppConstants.MODE_EDIT:
-                if (null != getPresenter()) {
+                if (isPresenterAvailable()) {
                     getPresenter().updateTask();
                 }
 
@@ -249,7 +275,7 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
 
     @Override
     public void onError(@NonNull Throwable error) {
-        int messageId = 0;
+        int messageId;
 
         switch (error.getMessage()) {
             case TaskException.TITLE_EMPTY_OR_NULL:
@@ -263,6 +289,9 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
                 break;
             case TaskException.DUE_DATE_EMPTY_OR_NULL:
                 messageId = R.string.empty_due_date;
+                break;
+            default:
+                messageId = R.string.generic_error;
                 break;
         }
 

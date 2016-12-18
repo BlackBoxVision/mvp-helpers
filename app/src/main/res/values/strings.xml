@@ -18,5 +18,12 @@
     <string name="empty_description">Description shouldn\'t be empty</string>
     <string name="empty_start_date">Start date shouldn\'t be empty</string>
     <string name="empty_due_date">Due date shouldn\'t be empty</string>
+    <string name="generic_error">Ups, something went wrong</string>
+
+    <string name="dialog_delete_task">Are you sure you want to remove this task?</string>
+    <string name="dialog_delete_all_tasks">Are you sure you want to remove all the tasks?</string>
+    <string name="close">close</string>
+
+    <string name="is_completed">Mark as Completed</string>
 
 </resources>

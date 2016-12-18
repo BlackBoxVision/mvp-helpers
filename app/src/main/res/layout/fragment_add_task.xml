@@ -1,4 +1,5 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -44,45 +45,67 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/startDateInputLayout"
+        <LinearLayout
+            android:id="@+id/dateLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:layout_marginBottom="8dp"
-            android:layout_below="@+id/descriptionInputLayout">
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_below="@id/descriptionInputLayout">
 
-            <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
-                android:id="@+id/startDateEditText"
-                android:layout_width="match_parent"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/startDateInputLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:hint="@string/start_date" />
+                android:layout_marginRight="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1">
 
-        </android.support.design.widget.TextInputLayout>
+                <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
+                    android:id="@+id/startDateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textIsSelectable="true"
+                    android:hint="@string/start_date" />
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/dueDateInputLayout"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/dueDateInputLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1">
+
+                <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
+                    android:id="@+id/dueDateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:textIsSelectable="true"
+                    android:hint="@string/due_date" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/isCompletedCheckbox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
-            android:layout_below="@+id/startDateInputLayout">
-
-            <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
-                android:id="@+id/dueDateEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textIsSelectable="true"
-                android:hint="@string/due_date" />
-
-        </android.support.design.widget.TextInputLayout>
+            android:layout_below="@id/dateLayout"
+            android:text="@string/is_completed"/>
 
         <Button
             android:id="@+id/taskButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dueDateInputLayout"
+            android:layout_below="@+id/isCompletedCheckbox"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"

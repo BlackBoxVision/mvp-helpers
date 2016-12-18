@@ -1,5 +1,6 @@
 package io.blackbox_vision.helpers.ui.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +37,7 @@ import io.blackbox_vision.helpers.logic.presenter.TaskListPresenter;
 import io.blackbox_vision.helpers.logic.view.TaskListView;
 import io.blackbox_vision.helpers.ui.activity.AddTaskActivity;
 import io.blackbox_vision.helpers.ui.adapter.TaskListAdapter;
-import io.blackbox_vision.helpers.ui.behaviour.RecyclerViewScrollBehaviour;
+import io.blackbox_vision.helpers.ui.behavior.RecyclerViewScrollBehaviour;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
@@ -67,6 +69,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         taskListAdapter = new TaskListAdapter(getApplicationContext(), new ArrayList<>());
         taskListAdapter.setOnItemSelectedListener(this::handleItemSelected);
 
@@ -82,6 +85,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.task_list_menu, menu);
+
         final MenuItem item = menu.findItem(R.id.action_search);
         final ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 
@@ -99,6 +103,13 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
             MenuItemCompat.setOnActionExpandListener(item, this);
         }
 
+        if (isPresenterAvailable()) {
+            Long count = getPresenter().getTasksCount();
+
+            menu.findItem(R.id.action_delete_all).setEnabled(count != 0);
+            menu.findItem(R.id.action_delete_all).setVisible(count != 0);
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -106,8 +117,14 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_delete_all:
-                if (null != getPresenter()) {
-                    getPresenter().removeAllTasks();
+                if (isPresenterAvailable() && getPresenter().getTasksCount() != 0L) {
+                    final AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.dialog_delete_all_tasks)
+                            .setPositiveButton(android.R.string.ok, this::onClick)
+                            .setNegativeButton(android.R.string.cancel, this::onClick)
+                            .create();
+
+                    dialog.show();
                 }
 
                 break;
@@ -116,8 +133,26 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
         return super.onOptionsItemSelected(item);
     }
 
+    public void onClick(@NonNull DialogInterface dialog, int which) {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                if (isPresenterAvailable()) {
+                    getPresenter().removeAllTasks();
+                }
+
+                dialog.dismiss();
+
+                break;
+
+            case DialogInterface.BUTTON_NEGATIVE:
+                dialog.cancel();
+
+                break;
+        }
+    }
+
     public boolean onClose() {
-        if (null != getPresenter()) {
+        if (isPresenterAvailable()) {
             getPresenter().getTasks();
         }
 
@@ -141,7 +176,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @Override
     public boolean onMenuItemActionCollapse(MenuItem item) {
-        if (null != getPresenter()) {
+        if (isPresenterAvailable()) {
             getPresenter().getTasks();
         }
 
@@ -169,13 +204,13 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @OnClick(R.id.newTaskButton)
     public void onClick(@NonNull View v) {
-        if (null != getPresenter()) {
+        if (isPresenterAvailable()) {
             getPresenter().newTask();
         }
     }
 
     public void handleItemSelected(@NonNull View v, @NonNull Task task, int position) {
-        if (null != getPresenter()) {
+        if (isPresenterAvailable()) {
             getPresenter().showTask(task.getId());
         }
     }
@@ -210,7 +245,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public void onError(@NonNull Throwable error) {
         switch (error.getMessage()) {
             case TaskException.EMPTY_LIST:
-                if (null != getPresenter()) {
+                if (isPresenterAvailable()) {
                     getPresenter().showEmptyView();
                 }
 
@@ -220,7 +255,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @Override
     public void onTasksRemoved() {
-        if (null != getPresenter()) {
+        if (isPresenterAvailable()) {
             getPresenter().showEmptyView();
         }
     }
