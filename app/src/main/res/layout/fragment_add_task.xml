@@ -42,9 +42,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="top|start"
                 android:scrollbars="vertical"
-                android:inputType="textMultiLine"
+                android:inputType="text"
                 android:maxLength="140"
-                android:lines="4"
                 android:hint="@string/description"/>
 
         </android.support.design.widget.TextInputLayout>

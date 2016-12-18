@@ -2,12 +2,17 @@ package io.blackbox_vision.helpers.logic.model;
 
 import com.orm.SugarRecord;
 
+import java.util.Date;
+
 
 public final class Task extends SugarRecord {
     private String title;
     private String description;
     private String startDate;
     private String dueDate;
+
+    private Date createdAt;
+
     private boolean isCompleted;
 
     public String getTitle() {
@@ -43,6 +48,15 @@ public final class Task extends SugarRecord {
 
     public Task setDueDate(String dueDate) {
         this.dueDate = dueDate;
+        return this;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Task setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 

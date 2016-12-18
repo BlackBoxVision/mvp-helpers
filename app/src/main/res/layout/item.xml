@@ -5,11 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    card_view:cardCornerRadius="2dp"
-    card_view:cardBackgroundColor="@color/cardview_light_background"
-    card_view:theme="@style/AppTheme">
+    card_view:cardCornerRadius="0dp"
+    card_view:cardBackgroundColor="@color/cardview_light_background">
 
     <LinearLayout
         android:orientation="vertical"
@@ -20,7 +17,7 @@
         <TextView android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center_vertical"
             android:textColor="@android:color/tab_indicator_text"
             tools:text="Title: This is the title"/>
@@ -28,25 +25,9 @@
         <TextView android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
             android:textColor="@android:color/tab_indicator_text"
             tools:text="Description: This is something to do"/>
-
-        <TextView android:id="@+id/startDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_vertical"
-            android:textColor="@android:color/tab_indicator_text"
-            tools:text="Start date: 20/08/2016"/>
-
-        <TextView android:id="@+id/dueDateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="@android:color/tab_indicator_text"
-            tools:text="End date: 20/08/2016"/>
 
     </LinearLayout>
 

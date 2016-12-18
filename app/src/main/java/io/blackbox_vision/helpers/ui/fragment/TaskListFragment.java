@@ -7,10 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -70,12 +73,17 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final DividerItemDecoration itemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+        itemDecoration.setDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.divider));
+
         taskListAdapter = new TaskListAdapter(getApplicationContext(), new ArrayList<>());
         taskListAdapter.setOnItemSelectedListener(this::handleItemSelected);
 
         taskListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         taskListView.addOnScrollListener(new RecyclerViewScrollBehavior(newTaskButton));
         taskListView.setItemViewCacheSize(1024 * 24);
+        taskListView.addItemDecoration(itemDecoration);
+        taskListView.setItemAnimator(new DefaultItemAnimator());
         taskListView.setAdapter(taskListAdapter);
         taskListView.setHasFixedSize(true);
 

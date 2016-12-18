@@ -3,6 +3,8 @@ package io.blackbox_vision.helpers.logic.interactor;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import java.util.Date;
+
 import io.blackbox_vision.helpers.logic.error.TaskException;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.mvphelpers.logic.interactor.BaseInteractor;
@@ -24,6 +26,7 @@ public final class AddTaskInteractor extends BaseInteractor {
             if (!hasError) {
                 Long id = Task.save(task);
                 task.setId(id);
+                task.setCreatedAt(new Date(System.currentTimeMillis()));
 
                 if (-1L != id) {
                     runOnUiThread(() -> success.onSuccess(task));
@@ -44,6 +47,7 @@ public final class AddTaskInteractor extends BaseInteractor {
             if (!hasError) {
                 Long id = Task.update(task);
                 task.setId(id);
+                task.setCreatedAt(new Date(System.currentTimeMillis()));
 
                 if (-1L != id) {
                     runOnUiThread(() -> success.onSuccess(task));
