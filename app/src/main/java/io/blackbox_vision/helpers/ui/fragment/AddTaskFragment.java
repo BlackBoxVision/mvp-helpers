@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,14 +43,26 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
     private String launchMode;
     private Long taskId;
 
+    @BindView(R.id.titleInputLayout)
+    TextInputLayout titleInputLayout;
+
     @BindView(R.id.titleEditText)
     TextInputEditText titleEditText;
+
+    @BindView(R.id.descriptionInputLayout)
+    TextInputLayout descriptionInputLayout;
 
     @BindView(R.id.descriptionEditText)
     TextInputEditText descriptionEditText;
 
+    @BindView(R.id.startDateInputLayout)
+    TextInputLayout startDateInputLayout;
+
     @BindView(R.id.startDateEditText)
     DatePickerEditText startDateEditText;
+
+    @BindView(R.id.dueDateInputLayout)
+    TextInputLayout dueDateInputLayout;
 
     @BindView(R.id.dueDateEditText)
     DatePickerEditText dueDateEditText;

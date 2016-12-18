@@ -6,10 +6,10 @@
     <string name="update_task">Update Task</string>
     <string name="view_tasks">View Tasks</string>
 
-    <string name="title"><b><i>Title</i></b></string>
-    <string name="description"><b><i>Description</i></b></string>
-    <string name="start_date"><b><i>From</i></b></string>
-    <string name="due_date"><b><i>To</i></b></string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="start_date">From</string>
+    <string name="due_date">To</string>
 
     <string name="search">Search..</string>
 
