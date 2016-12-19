@@ -41,6 +41,7 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
                     .setDescription(getView().getDescription())
                     .setStartDate(getView().getStartDate())
                     .setDueDate(getView().getDueDate())
+                    .setCreatedAt(new Date(System.currentTimeMillis()))
                     .setCompleted(false);
 
             addTaskInteractor.addNewTask(task, this::onError, this::onTaskCreated);
@@ -54,6 +55,7 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
                     .setDescription(getView().getDescription())
                     .setStartDate(getView().getStartDate())
                     .setDueDate(getView().getDueDate())
+                    .setCreatedAt(new Date(System.currentTimeMillis()))
                     .setCompleted(false);
 
             final Long taskId = getView().getTaskId();
