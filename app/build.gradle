@@ -53,6 +53,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.github.satyan:sugar:1.5'
+    compile 'com.jakewharton:butterknife:8.4.0'
 
     testCompile 'junit:junit:4.12'
 }

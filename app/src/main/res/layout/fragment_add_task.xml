@@ -1,8 +1,8 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="io.blackbox_vision.helpers.ui.fragment.AddTaskFragment"
     tools:showIn="@layout/activity_add_task">
 
@@ -15,7 +15,7 @@
             android:id="@+id/titleInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="8dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -56,7 +56,7 @@
             android:id="@+id/startDateInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="8dp"
             android:layout_below="@id/descriptionInputLayout">
 
             <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
@@ -73,7 +73,7 @@
             android:id="@+id/dueDateInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="8dp"
             android:layout_below="@id/startDateInputLayout">
 
             <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
@@ -90,7 +90,7 @@
             android:id="@+id/isCompletedCheckbox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="8dp"
             android:layout_below="@id/dueDateInputLayout"
             android:text="@string/is_completed"/>
 
