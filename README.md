@@ -77,6 +77,8 @@ The concepts behind this library are the following ones:
 
 - **Presenter** → The **presenter** acts as a middle man between the **Interactor** and the **View**.
 
+![](https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/mvp-helpers-architecture.png)
+
 ##Usage example
 
 The usage is really simple: 
