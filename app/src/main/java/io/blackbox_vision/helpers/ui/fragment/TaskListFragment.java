@@ -49,7 +49,7 @@ import static android.support.v4.view.MenuItemCompat.*;
 import static android.support.v7.widget.SearchView.*;
 
 
-public final class TaskListFragment extends BaseFragment<TaskListPresenter>
+public final class TaskListFragment extends BaseFragment<TaskListPresenter, TaskListView>
         implements TaskListView, OnQueryTextListener, OnActionExpandListener {
 
     private TaskListAdapter taskListAdapter;
@@ -197,19 +197,23 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter>
 
     @NonNull
     @Override
-    public PresenterFactory<TaskListPresenter> createPresenterFactory() {
+    protected PresenterFactory<TaskListPresenter> createPresenterFactory() {
         return TaskListPresenterFactory.newInstance();
     }
 
     @Override
-    public int getLayout() {
+    protected int getLayout() {
         return R.layout.fragment_task_list;
     }
 
     @Override
-    public void onPresenterCreated(@NonNull TaskListPresenter presenter) {
-        presenter.attachView(this);
+    protected void onPresenterCreated(@NonNull TaskListPresenter presenter) {
         presenter.getTasks();
+    }
+
+    @Override
+    protected void onPresenterDestroyed() {
+
     }
 
     @OnClick(R.id.newTaskButton)

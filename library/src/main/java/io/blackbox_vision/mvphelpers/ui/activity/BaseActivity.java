@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
+import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 import io.blackbox_vision.mvphelpers.ui.loader.PresenterLoader;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 
-public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements LoaderCallbacks<P> {
+public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseView> extends AppCompatActivity
+        implements LoaderCallbacks<P> {
+
     private static final int LOADER_ID = 201;
 
     protected P presenter;
@@ -32,8 +35,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void onLoadFinished(Loader<P> loader, P presenter) {
-        this.presenter = presenter;
+    public void onLoadFinished(Loader<P> loader, P basePresenter) {
+        presenter = basePresenter;
+        presenter.attachView(getPresenterView());
         onPresenterCreated(this.presenter);
     }
 
@@ -43,21 +47,29 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             presenter.detachView();
             presenter = null;
         }
+
+        onPresenterDestroyed();
     }
 
     @NonNull
-    public abstract PresenterFactory<P> createPresenterFactory();
+    protected abstract PresenterFactory<P> createPresenterFactory();
 
     @LayoutRes
-    public abstract int getLayout();
+    protected abstract int getLayout();
 
-    public abstract void onPresenterCreated(@NonNull P presenter);
+    protected abstract void onPresenterCreated(@NonNull P presenter);
 
-    public P getPresenter() {
+    protected abstract void onPresenterDestroyed();
+
+    protected P getPresenter() {
         return presenter;
     }
 
-    public boolean isPresenterAvailable() {
+    protected boolean isPresenterAvailable() {
         return getPresenter() != null;
+    }
+
+    protected V getPresenterView() {
+        return (V) this;
     }
 }

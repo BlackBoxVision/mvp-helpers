@@ -40,7 +40,7 @@ import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
 
-public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implements AddTaskView {
+public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTaskView> implements AddTaskView {
     private String launchMode;
     private Long taskId;
 
@@ -189,24 +189,28 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter> implem
 
     @NonNull
     @Override
-    public PresenterFactory<AddTaskPresenter> createPresenterFactory() {
+    protected PresenterFactory<AddTaskPresenter> createPresenterFactory() {
         return AddTaskPresenterFactory.newInstance();
     }
 
     @LayoutRes
     @Override
-    public int getLayout() {
+    protected int getLayout() {
         return R.layout.fragment_add_task;
     }
 
     @Override
-    public void onPresenterCreated(@NonNull AddTaskPresenter presenter) {
-        presenter.attachView(this);
+    protected void onPresenterCreated(@NonNull AddTaskPresenter presenter) {
         presenter.findLaunchMode();
 
         if (taskId != -1L) {
             presenter.findTaskById(taskId);
         }
+    }
+
+    @Override
+    protected void onPresenterDestroyed() {
+
     }
 
     @Override

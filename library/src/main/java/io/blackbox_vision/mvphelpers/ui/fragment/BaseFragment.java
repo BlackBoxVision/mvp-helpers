@@ -13,21 +13,18 @@ import android.view.ViewGroup;
 
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
+import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 import io.blackbox_vision.mvphelpers.ui.loader.PresenterLoader;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements LoaderCallbacks<P> {
+public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseView> extends Fragment
+        implements LoaderCallbacks<P> {
+
     private static final int LOADER_ID = 201;
 
     protected P presenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
 
     @Nullable
     @Override
@@ -36,14 +33,22 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
     public Loader<P> onCreateLoader(int id, Bundle args) {
         return new PresenterLoader<>(getContext(), createPresenterFactory());
     }
 
     @Override
-    public void onLoadFinished(Loader<P> loader, P presenter) {
-        this.presenter = presenter;
-        onPresenterCreated(this.presenter);
+    public void onLoadFinished(Loader<P> loader, P basePresenter) {
+        presenter = basePresenter;
+        presenter.attachView(getPresenterView());
+        onPresenterCreated(presenter);
     }
 
     @Override
@@ -52,26 +57,34 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             presenter.detachView();
             presenter = null;
         }
+
+        onPresenterDestroyed();
+    }
+
+    @NonNull
+    protected abstract PresenterFactory<P> createPresenterFactory();
+
+    @LayoutRes
+    protected abstract int getLayout();
+
+    protected abstract void onPresenterCreated(@NonNull P presenter);
+
+    protected abstract void onPresenterDestroyed();
+
+    protected P getPresenter() {
+        return presenter;
+    }
+
+    protected boolean isPresenterAvailable() {
+        return getPresenter() != null;
+    }
+
+    protected V getPresenterView() {
+        return (V) this;
     }
 
     @NonNull
     protected Context getApplicationContext() {
         return getContext().getApplicationContext();
-    }
-
-    @NonNull
-    public abstract PresenterFactory<P> createPresenterFactory();
-
-    @LayoutRes
-    public abstract int getLayout();
-
-    public abstract void onPresenterCreated(@NonNull P presenter);
-
-    public P getPresenter() {
-        return presenter;
-    }
-
-    public boolean isPresenterAvailable() {
-        return getPresenter() != null;
     }
 }
