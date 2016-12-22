@@ -1,15 +1,17 @@
-#MVP Helpers
+<img src="https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/logo.png" width="425px" height="125px">
 > Helper classes to build Android Apps through MVP pattern in a faster way
+
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MVP%20Helpers-brightgreen.svg?style=flat)]() [![](https://jitpack.io/v/BlackBoxVision/mvp-helpers.svg)](https://jitpack.io/#BlackBoxVision/mvp-helpers) [![Build Status](https://travis-ci.org/BlackBoxVision/mvp-helpers.svg?branch=master)](https://travis-ci.org/BlackBoxVision/mvp-helpers)
+
+##Intro
 
 After working about 3 years with Android development, I learn a lot from the different projects I have made, a lot of mistakes, and a lot of lessons learned. About 1 year ago, or more, in Android, MVP become the selected pattern to make Android Apps. MVP makes your apps code more easier to follow, and also easier to reason. 
 
-This library, exposes a minimal API that I have abstracted during many projects. The classes that contain this library help me to speed app development, also, they clean my code a lot. 
+**This library exposes a minimal API, that should help you to build well architected Android Apps. ¡Check the following steps to get up and running!**
 
-Check the following instructions under this **README** in order to get a project up and running with this simpler library.
+##Installation
 
-##Installation 
-
-Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow this instructions to get everything work: 
+Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. Looking for Kotlin variant? [Go here](https://github.com/BlackBoxVision/mvp-helpers/tree/kotlin)
 
 **Gradle**
 
@@ -18,7 +20,9 @@ Actually I don't have this library in **JCenter/Maven Central**, so if you want 
 allprojects {
 	repositories {
 		...
-		maven { url "https://jitpack.io" }
+		maven { 
+			url "https://jitpack.io" 
+		}
 	}
 }
 ```
@@ -26,7 +30,7 @@ allprojects {
 - Add the dependency:
 ```gradle
 dependencies {
-	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.0.3'
+	 compile 'com.github.BlackBoxVision:mvp-helpers:v0.2.0'
 }
 ```
 
@@ -46,7 +50,7 @@ dependencies {
 <dependency>
   <groupId>com.github.BlackBoxVision</groupId>
   <artifactId>mvp-helpers</artifactId>
-	<version>v0.0.3</version>
+	<version>v0.2.0</version>
 </dependency>
 ```
 
@@ -59,119 +63,154 @@ dependencies {
 
 - Add the dependency:
 ```sbt
-  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.0.3"	
+  libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.2.0"	
 ```
+
+##Core Concepts
+
+The concepts behind this library are the following ones: 
+- **View** → The **View** is an interface that contains methods related to UI interaction. Those methods should be implemented in your **Activity, Fragment or View**.
+
+- **Interactor** → The **Interactor** is the class that do the hard work, all the blocking operations like **I/O, Networking, Database** Intectations should be done here. 
+
+- **Presenter** → The **presenter** acts as a middle man between the **Interactor** and the **View**.
+
+![](https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/mvp-helpers-architecture.png)
 
 ##Usage example
 
-The usage is really simple, the concepts behind this library are the following ones: 
+The usage is really simple: 
 
-- **View** → The **View** is an interface that contains methods related to UI interaction, to create you own you should extends the **BaseView** like in the following example: 
+**1** - Create your **View** interface by extending the [**BaseView**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/view/BaseView.java). **BaseView** is an empty interface that acts as water mark for the **Presenter**.
 
 ```java
 public interface DetailsView extends BaseView {
 
-  void onInfoReceived(@NonNull Bundle information);
-  
-  void onInfoError(@NonNull String errorMessage);
+    void onInfoReceived(@NonNull Bundle information);
+
+    void onInfoError(@NonNull String errorMessage);
 }
 ```
 
-- **Interactor** → The **Interactor** is the class that do the hard work, all the blocking operations like **I/O, Networking, Database** Intectations should be done here. 
+**2** - Create an **Interactor** class by extending the [**BaseInteractor**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/interactor/BaseInteractor.java) class. The **BaseInteractor** provides you a set of helper methods to deal with **background execution and UIThread interaction**. The methods are the following ones: 
 
-When you extend the **BaseInteractor** class, you get two useful methods **runOnBackground** and **runOnUiThread**. Both methods receives a **Runnable** as param. 
-
-- **runOnBackground** is a method that executes the runnable you pass to it in an **Executor**. The executor is an instance generated by **Executors** class, it provides you with a fixed thread pool executor of 5 theads. Enough to do hard work. 
-
-- **runOnUiThread** is a method that executes the runnable you pass to it in an **Handler**. The handler instance is generated with a reference to the **Main Looper**. In this way, we know that we really comunicate to the correct thread the updates to post, in our case, the UI one. 
-
-Check the following example: 
+- **runOnUiThread** → use it when you need to post data to the main thread.
+- **runOnBackground** → use it when you need to make background processing. 
+- **runOnBackground** → use it when you need to make a scheduled task. 
+- **cancelTask** → use it when you want to cancel a scheduled task. 
 
 ```java
 //This example uses Java 8 features, I assume the usage of retrolambda
 public final class DetailsInteractor extends BaseInteractor {
 
-  public void retrieveDetailsFromService(@NonNull final String id, @NonNull final OnSuccessListener<Bundle> successListener, @NonNull final OnErrorListener<String> errorListener) {
-    runOnBackground(() -> {
-      //Getting data from somewhere
-      Bundle data = ... ;   
-      
-      if (data != null) {
-        runOnUiThread(() -> successListener.onSuccess(data));  
-      } else {
-        runOnUiThread(() -> errorListener.onError("Ups, something went wrong"));
-      }
-    })
-  }
+    public void retrieveDetailsFromService(@NonNull final String id, @NonNull final OnSuccessListener<Bundle> successListener, @NonNull final OnErrorListener<String> errorListener) {
+        runOnBackground(() -> {
+            //Getting data from somewhere
+            final Bundle data = MockUtils.getMockedData(id);
+
+            runOnUiThread(() -> {
+                if (data != null) {
+                    successListener.onSuccess(data);
+                } else {
+                    errorListener.onError("Ups, something went wrong");
+                } 
+            });
+        });
+    }
 }
 ```
 
-- **Presenter** → The **presenter** acts as a middle man between the **Interactor** and the **View**. When you request something to the presenter, he contacts the interactor object to get what he needs, and then he interacts with the view to make you get what you really need. Continue with the example of a Details: 
+**3** - Create a **Presenter** class by extending the [**BasePresenter**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/presenter/BasePresenter.java) class. The **BasePresenter** provides you with a set of helper methods to deal with **View** management. The methods are the following ones:
+
+- **isViewAttached** → check if you have set the view to the presenter, returns to you a boolean value that you should handle in your presenter implementation. 
+- **attachView** → add the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
+- **detachView** → dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
+- **getView** → simple getter, to make your access to the view defined more cleaner.
+- **onViewAttached** → callback fired when the view is attached to the presenter, it gives you the view so you can start doing something like restoring state, instantiating the interactors.  
+- **onViewDetached** → callback fired when the view is detached from the presenter, in this place you can dereference the objects you won't use anymore. 
 
 ```java
 //I use method references from Java 8 to point the callbacks to interactor, I assume a working project with Retrolambda
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
-  private DetailsInteractor interactor;
-  
-  public DetailsPresenter() { 
-    interactor = new DetailsInteractor();
-  }
-  
-  public void getInformationFromId(@NonNull String id) {
-    if (isViewAttached()) {
-      interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+    private DetailsInteractor interactor;
+    
+    @Override
+    protected void onViewAttached(@NonNull DetailsView view) {
+        interactor = new DetailsInteractor();
     }
-  }
-  
-  private void onSuccess(@NonNull Bundle data) {
-    if (isViewAttached()) {
-      getView().onInfoReceived(data);
+
+    @Override
+    protected void onViewDetached() {
+        interactor = null;
     }
-  }
-  
-  private void onError(@NonNull String errorMessage) {
-    if (isViewAttached()) {
-      getView().onInfoError(errorMessage);
+
+    public void findRequiredInformation(@NonNull String id) {
+        if (isViewAttached()) {
+            interactor.retrieveDetailsFromService(id, this::onSuccess, this::onError);
+        }
     }
-  }
+
+    private void onSuccess(@NonNull Bundle information) {
+        if (isViewAttached()) {
+            getView().onInfoReceived(information);
+        }
+    }
+
+    private void onError(@NonNull String errorMessage) {
+        if (isViewAttached()) {
+            getView().onInfoError(errorMessage);
+        }
+    }
 }
 ```
-As you see, **BasePresenter** is a generic class, you have to pass to it the **View** that you want to use when you inherit from it. **BasePresenter** provides you with a set of methods to deal with **view** interfaces, that are the following ones: 
 
-- **isViewAttached** → This method checks if you have set the view to the presenter, returns to you a boolean value that you should handle in your presenter implementation. 
+**4** - Create a custom **PresenterFactory** class to provide the presenter instance. You should implement the [**PresenterFactory**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/factory/PresenterFactory.java) interface. 
 
-- **detachView** → This method dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
-
-- **registerView** → This method adds the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
-
-- **getView** → simple getter, to make your access to the view defined more cleaner.
-
-##Complement with Android 
-
-Well, that's the basics behind the library. At this point, you are asking yourself, how do I connect this classes with a Android??. Well, that's pretty simple! 
-
-I work a lot with **Fragments**, they simplify a lot my work flow. I think in them as the **View** in Android. I let Activity manage Fragments, don't want to charge them, since they have a lot of responsabilities. 
-
-To finalize the explanation, check the sample implementation: 
+**Now we have to create a Factory, because I have recently implemented a way to not loose presenter when configuration changes. The BaseActivity/BaseFragment use a Loader to provide the Presenter instance, Android Loaders can survive configuration changes, that's why I select them.** 
 
 ```java
-public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
+class DetailsPresenterFactory implements PresenterFactory<DetailsPresenter> {
+	
+	@Override
+	public DetailsPresenter create() {
+		return new DetailsPresenter();
+	}
+}
+```
+
+**5** - Attach this cycle with Android specific classes. You can choice an **Activity/Fragment or also a custom view**. In this case I will show you an example with **Fragment** that inherits from [**BaseFragment**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/ui/fragment/BaseFragment.java)
+
+The **BaseFragment** comes with a resumed lifecycle, and a set of methods to implement. The methods are the following ones:
+
+- **addPresenter** → in this method you have to create you instance of Presenter. 
+- **getLayout** → in this method you have pass the id reference to the layout. 
+- **getPresenter** → simple getter, to make your access to the presenter more cleaner.
+- **onPresenterCreated** → In this method you can start doing something with the presenter. **¡Now the View is attached automatically to the Presenter!**
+- **onPresenterDestroyed** → In this method you can do something, like saving app state. 
+
+```java
+public final class DetailsFragment extends BaseFragment<DetailsPresenter, DetailsView> implements DetailsView {
+    
     @Override
-    public addPresenter() {
-      return new DetailsPresenter();
+    protected DetailsPresenterFactory createPresenterFactory() {
+      	return new DetailsPresenterFactory();
     }
     
     @LayoutRes
     @Override
-    public int getLayout() {
-      return R.layout.fragment_details;
+    protected int getLayout() {
+      	return R.layout.fragment_details;
     }
     
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getPresenter.registerView(this);
-        getPresenter.getInformationFromId("ssdWRGD132");
+    protected void onPresenterCreated(@NonNull DetailsPresenter presenter) {
+    	//Do something when presenter it's created
+	    getPresenter().getInformationFromId("ssdWRGD132");
+    }
+    
+    @Override
+    protected void onPresenterDestroyed() {
+	    //Do something when presenter is removed, this method is called in onDestroy	
     }
     
     @Override
@@ -186,25 +225,9 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 } 
 ```
 
-As you see, this Fragment is a **generic** class that solves some troubles for you, **It has the ability to detach view for you in onDestroyView so you don't have to, auto inject views with butter knife, and lifecycle methods simplified**. 
+##Advise about ButterKnife
 
-When you inherit it, you will get the following methods to implement:
-
-- **addPresenter** → in this method you have to create you instance of Presenter. 
-
-- **getLayout** → in this method you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
-
-- **getPresenter** → simple getter, to make your access to the presenter more cleaner.
-
-##Some notes on ButterKnife
-
-The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
-
-```gradle
-dependencies {
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-}
-```
+From version **0.2.0 of this library**, I have decided to remove butterKnife, in order to not force any dev to use butterKnife. 
 
 ##Issues 
 
@@ -216,15 +239,26 @@ Of course, if you see something that you want to upgrade from this library, or a
 
 ##Release History
 
-* 0.0.3
-  * CHANGE: Removed ButterKnife annotation processor	
-  * CHANGE: Rename mvphelpers library to library
-* 0.0.2
-  * CHANGE: Minor updates
-* 0.0.1
+* **0.2.0**
+  * **CHANGE**: **BasePresenter** has now two new callbacks, to be notified about **view attachment/detachment**. 
+  * **CHANGE**: **BaseActivity/BaseFragment** has now two new callbacks to be notified about **presenter creation/destruction**, also, **addPresenter** callback has been replace with **createPresenterFactory**
+  * **CHANGE**: Added **PresenterFactory** interface to create custom factories to provide presenter instances
+  * **CHANGE**: Added **PresenterLoader**, an Android Loader, that provides the presenter instance and survives configuration changes. 
+  * **BUG FIX**: Fixed issue with **BaseInteractor runOnBackground method**, this method was calling **executor.isTerminated** instead of calling **executor.isShutdown**, this produce a RuntimeException, because of troubles with ThreadPool reuse. Also, the methods have been refactored, to use a **ExecutorService** to get more control instead of an **Executor**.
+
+* **0.1.0** 
+  * **CHANGE**: Folder refactor under **UI package**
+  * **CHANGE**: Modified **BasePresenter** method **registerView** to **attachView** in order to get more consistence
+  * **CHANGE**: Added new **runOnBackground** version in **BaseInteractor** that uses a ScheduledExecutorService and also cancel method to stop execution
+  * **CHANGE**: Added Custom Views to extend **BaseRelativeLayout, BaseFrameLayout and BaseLinearLayout**
+* **0.0.3**
+  * **CHANGE**: Removed **ButterKnife** annotation processor	
+  * **CHANGE**: Rename **mvphelper** library to library
+* **0.0.2**
+  * **CHANGE**: Minor updates
+* **0.0.1**
   * Work in progress
 
 ##License
 
 Distributed under the **MIT license**. See [LICENSE](https://github.com/BlackBoxVision/mvp-helpers/blob/master/LICENSE) for more information.
-
