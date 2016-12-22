@@ -164,7 +164,7 @@ public final class DetailsPresenter extends BasePresenter<DetailsView> {
 }
 ```
 
-**4** - Create a custom **PresenterFactory** class to provide the presenter instance. You should implement the **PresenterFactory** interface. 
+**4** - Create a custom **PresenterFactory** class to provide the presenter instance. You should implement the [**PresenterFactory**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/factory/PresenterFactory.java) interface. 
 
 **Now we have to create a Factory, because I have recently implemented a way to not loose presenter when configuration changes. The BaseActivity/BaseFragment use a Loader to provide the Presenter instance, Android Loaders can survive configuration changes, that's why I select them.** 
 
