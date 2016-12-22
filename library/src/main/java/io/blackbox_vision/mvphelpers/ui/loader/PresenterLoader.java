@@ -17,7 +17,7 @@ public final class PresenterLoader<P extends BasePresenter> extends Loader<P> {
     @Nullable
     private P presenter;
 
-    public PresenterLoader(@NonNull Context context, @NonNull PresenterFactory<P> factory) {
+    protected PresenterLoader(@NonNull Context context, @NonNull PresenterFactory<P> factory) {
         super(context);
         this.factory = factory;
     }
@@ -49,5 +49,9 @@ public final class PresenterLoader<P extends BasePresenter> extends Loader<P> {
             presenter.detachView();
             presenter = null;
         }
+    }
+
+    public static <P extends BasePresenter> PresenterLoader<P> newInstance(@NonNull Context context, @NonNull PresenterFactory<P> factory) {
+        return new PresenterLoader<>(context, factory);
     }
 }

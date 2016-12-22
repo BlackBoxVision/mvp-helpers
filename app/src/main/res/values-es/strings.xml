@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tasks Manager</string>
+
+    <string name="create_task">Añadir Tarea</string>
+    <string name="edit_task">Editar Tarea</string>
+    <string name="update_task">Actualizar Tarea</string>
+    <string name="view_tasks">Ver Tareas</string>
+
+    <string name="title">Titulo</string>
+    <string name="description">Descripción</string>
+    <string name="start_date">Desde</string>
+    <string name="due_date">Hasta</string>
+
+    <string name="search">Buscar..</string>
+
+    <string name="empty_task_list">No has añadido tareas aún</string>
+    <string name="empty_title">El Titulo no debe estar vacío</string>
+    <string name="empty_description">La descripción no debe estar vacia</string>
+    <string name="empty_start_date">La fecha inicio no debe estar vacia</string>
+    <string name="empty_due_date">La fecha fin no debe estar vacia</string>
+    <string name="generic_error">Ups, algo ha salido mal</string>
+
+    <string name="dialog_delete_task">Estás seguro de qué deseas remover esta tarea?</string>
+    <string name="dialog_delete_all_tasks">Estás seguro de qué deseas remover todas las tareas?</string>
+    <string name="close">cerrar</string>
+
+    <string name="is_completed">Marcar como completado</string>
+
+    <string name="action_delete">Borrar</string>
+    <string name="action_delete_all">Borrar todos</string>
+</resources>

@@ -7,82 +7,100 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
+import io.blackbox_vision.mvphelpers.logic.view.BaseView;
 import io.blackbox_vision.mvphelpers.ui.loader.PresenterLoader;
 
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements LoaderCallbacks<P> {
+public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseView> extends Fragment implements LoaderCallbacks<P> {
+
+    private static final String TAG = BaseFragment.class.getSimpleName();
+
     private static final int LOADER_ID = 201;
 
-    protected Unbinder unbinder;
-
-    @Nullable
     protected P presenter;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
-    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(getLayout(), container, false);
-        unbinder = ButterKnife.bind(this, view);
-        return view;
+        return inflater.inflate(getLayout(), container, false);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
     public Loader<P> onCreateLoader(int id, Bundle args) {
-        return new PresenterLoader<>(getContext(), createPresenterFactory());
+        return PresenterLoader.newInstance(getContext(), createPresenterFactory());
     }
 
     @Override
-    public void onLoadFinished(Loader<P> loader, P presenter) {
-        this.presenter = presenter;
-        onPresenterCreated(this.presenter);
+    public void onLoadFinished(Loader<P> loader, P basePresenter) {
+        presenter = basePresenter;
+
+        if (null != getPresenterView()) {
+            presenter.attachView(getPresenterView());
+        } else {
+            Log.d(TAG, "View can't be attached because you don't implement it in your fragment.");
+        }
+
+        onPresenterCreated(presenter);
     }
 
     @Override
     public void onLoaderReset(Loader<P> loader) {
-        if (null != presenter) {
+        if (isPresenterAvailable()) {
             presenter.detachView();
             presenter = null;
         }
+
+        onPresenterDestroyed();
+    }
+
+    @NonNull
+    protected abstract PresenterFactory<P> createPresenterFactory();
+
+    @LayoutRes
+    protected abstract int getLayout();
+
+    protected abstract void onPresenterCreated(@NonNull P presenter);
+
+    protected abstract void onPresenterDestroyed();
+
+    protected P getPresenter() {
+        return presenter;
+    }
+
+    protected boolean isPresenterAvailable() {
+        return presenter != null;
+    }
+
+    protected V getPresenterView() {
+        V view = null;
+
+        try {
+            view = (V) this;
+        } catch (final ClassCastException ex) {
+            Log.e(TAG, "You should implement your view class in the fragment.", ex.getCause());
+        }
+
+        return view;
     }
 
     @NonNull
     protected Context getApplicationContext() {
         return getContext().getApplicationContext();
-    }
-
-    @NonNull
-    public abstract PresenterFactory<P> createPresenterFactory();
-
-    @LayoutRes
-    public abstract int getLayout();
-
-    public abstract void onPresenterCreated(@NonNull P presenter);
-
-    @Nullable
-    public P getPresenter() {
-        return presenter;
     }
 }

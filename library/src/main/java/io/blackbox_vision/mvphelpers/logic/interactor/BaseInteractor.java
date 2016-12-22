@@ -26,7 +26,21 @@ public class BaseInteractor {
     protected void runOnUiThread(@NonNull Runnable runnable) {
         Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
 
-        handler.post(runnable);
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            handler.post(runnable);
+        } else {
+            runnable.run();
+        }
+    }
+
+    protected void runOnUiThread(@NonNull Runnable runnable, long delayAtMillis) {
+        Preconditions.checkNotNull(runnable, "runnable shouldn't be null");
+
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            handler.postDelayed(runnable, delayAtMillis);
+        } else {
+            runnable.run();
+        }
     }
 
     protected void runOnBackground(@NonNull Runnable runnable) {
