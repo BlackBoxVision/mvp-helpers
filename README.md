@@ -7,9 +7,7 @@
 
 After working about 3 years with Android development, I learn a lot from the different projects I have made, a lot of mistakes, and a lot of lessons learned. About 1 year ago, or more, in Android, MVP become the selected pattern to make Android Apps. MVP makes your apps code more easier to follow, and also easier to reason. 
 
-This library, exposes a minimal API that I have abstracted during many projects. The classes that contain this library help me to speed app development, also, they clean my code a lot. 
-
-Check the following instructions under this **README** in order to get a project up and running with this simpler library.
+**This library exposes a minimal API, that should help you to build well architected Android Apps. ¡Check the following steps to get up and running!**
 
 ##Installation
 
@@ -77,6 +75,8 @@ The concepts behind this library are the following ones:
 
 - **Presenter** → The **presenter** acts as a middle man between the **Interactor** and the **View**.
 
+![](https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/mvp-helpers-architecture.png)
+
 ##Usage example
 
 The usage is really simple: 
@@ -126,14 +126,22 @@ public final class DetailsInteractor extends BaseInteractor {
 - **attachView** → add the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
 - **detachView** → dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
+- **onViewAttached** → callback fired when the view is attached to the presenter, it gives you the view so you can start doing something like restoring state, instantiating the interactors.  
+- **onViewDetached** → callback fired when the view is detached from the presenter, in this place you can dereference the objects you won't use anymore. 
 
 ```java
 //I use method references from Java 8 to point the callbacks to interactor, I assume a working project with Retrolambda
 public final class DetailsPresenter extends BasePresenter<DetailsView> {
     private DetailsInteractor interactor;
-
-    public DetailsPresenter() {
+    
+    @Override
+    protected void onViewAttached(@NonNull DetailsView view) {
         interactor = new DetailsInteractor();
+    }
+
+    @Override
+    protected void onViewDetached() {
+        interactor = null;
     }
 
     public void findRequiredInformation(@NonNull String id) {
@@ -156,38 +164,53 @@ public final class DetailsPresenter extends BasePresenter<DetailsView> {
 }
 ```
 
-**4** - Attach this cycle with Android specific classes. You can choice an **Activity/Fragment or also a custom view**. In this case I will show you an example with **Fragment** that inherits from [**BaseFragment**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/ui/fragment/BaseFragment.java)
+**4** - Create a custom **PresenterFactory** class to provide the presenter instance. You should implement the **PresenterFactory** interface. 
+
+**Now we have to create a Factory, because I have recently implemented a way to not loose presenter when configuration changes. The BaseActivity/BaseFragment use a Loader to provide the Presenter instance, Android Loaders can survive configuration changes, that's why I select them.** 
+
+```java
+class DetailsPresenterFactory implements PresenterFactory<DetailsPresenter> {
+	
+	@Override
+	public DetailsPresenter create() {
+		return new DetailsPresenter();
+	}
+}
+```
+
+**5** - Attach this cycle with Android specific classes. You can choice an **Activity/Fragment or also a custom view**. In this case I will show you an example with **Fragment** that inherits from [**BaseFragment**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/ui/fragment/BaseFragment.java)
 
 The **BaseFragment** comes with a resumed lifecycle, and a set of methods to implement. The methods are the following ones:
 
 - **addPresenter** → in this method you have to create you instance of Presenter. 
-- **getLayout** → in this method you have pass the id reference to the layout. This library comes with **ButterKnife**, to provide efficiency I have implemented **onCreateView** in BaseFragment where I call **ButterKnife.bind** method, so you have view binding out of the box! :smile:
+- **getLayout** → in this method you have pass the id reference to the layout. 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
-- **onPresenterCreated** → In this method you should attach the view to the presenter in order to start working.
+- **onPresenterCreated** → In this method you can start doing something with the presenter. **¡Now the View is attached automatically to the Presenter!**
+- **onPresenterDestroyed** → In this method you can do something, like saving app state. 
 
 ```java
-public final class DetailsFragment extends BaseFragment<DetailsPresenter> implements DetailsView {
+public final class DetailsFragment extends BaseFragment<DetailsPresenter, DetailsView> implements DetailsView {
     
     @Override
-    public addPresenter() {
-      	return new DetailsPresenter();
+    protected DetailsPresenterFactory createPresenterFactory() {
+      	return new DetailsPresenterFactory();
     }
     
     @LayoutRes
     @Override
-    public int getLayout() {
+    protected int getLayout() {
       	return R.layout.fragment_details;
     }
     
     @Override
-    void onPresenterCreated(@NonNull DetailsPresenter presenter) {
-    	presenter.attachView(this);
+    protected void onPresenterCreated(@NonNull DetailsPresenter presenter) {
+    	//Do something when presenter it's created
+	    getPresenter().getInformationFromId("ssdWRGD132");
     }
     
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getPresenter().getInformationFromId("ssdWRGD132");
+    protected void onPresenterDestroyed() {
+	    //Do something when presenter is removed, this method is called in onDestroy	
     }
     
     @Override
@@ -202,15 +225,9 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter> implem
 } 
 ```
 
-##Some notes on ButterKnife
+##Advise about ButterKnife
 
-The standard **ButterKnife** library is included by default. But there is a missing point, you have to add in your app **build.gradle** file the annotation procesor, if not, @Bind annotations won't work: 
-
-```gradle
-dependencies {
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-}
-```
+From version **0.2.0 of this library**, I have decided to remove butterKnife, in order to not force any dev to use butterKnife. 
 
 ##Issues 
 
@@ -221,6 +238,13 @@ If you found a bug, or you have an answer, or whatever. Please, open an [issue](
 Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, **PRs are welcome!**
 
 ##Release History
+
+* **0.2.0**
+  * **CHANGE**: **BasePresenter** has now two new callbacks, to be notified about **view attachment/detachment**. 
+  * **CHANGE**: **BaseActivity/BaseFragment** has now two new callbacks to be notified about **presenter creation/destruction**, also, **addPresenter** callback has been replace with **createPresenterFactory**
+  * **CHANGE**: Added **PresenterFactory** interface to create custom factories to provide presenter instances
+  * **CHANGE**: Added **PresenterLoader**, an Android Loader, that provides the presenter instance and survives configuration changes. 
+  * **BUG FIX**: Fixed issue with **BaseInteractor runOnBackground method**, this method was calling **executor.isTerminated** instead of calling **executor.isShutdown**, this produce a RuntimeException, because of troubles with ThreadPool reuse. Also, the methods have been refactored, to use a **ExecutorService** to get more control instead of an **Executor**.
 
 * **0.1.0** 
   * **CHANGE**: Folder refactor under **UI package**
