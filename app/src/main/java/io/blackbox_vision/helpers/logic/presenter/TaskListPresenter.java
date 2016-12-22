@@ -17,12 +17,12 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
     private TaskListPresenter() { }
 
     @Override
-    public void onViewAttached(@NonNull TaskListView view) {
+    protected void onViewAttached(@NonNull TaskListView view) {
         taskListInteractor = TaskListInteractor.newInstance();
     }
 
     @Override
-    public void onViewDetached() {
+    protected void onViewDetached() {
         taskListInteractor = null;
     }
 

@@ -19,12 +19,12 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
     private AddTaskPresenter() { }
 
     @Override
-    public void onViewAttached(@NonNull AddTaskView view) {
+    protected void onViewAttached(@NonNull AddTaskView view) {
         addTaskInteractor = AddTaskInteractor.newInstance();
     }
 
     @Override
-    public void onViewDetached() {
+    protected void onViewDetached() {
         addTaskInteractor = null;
     }
 
