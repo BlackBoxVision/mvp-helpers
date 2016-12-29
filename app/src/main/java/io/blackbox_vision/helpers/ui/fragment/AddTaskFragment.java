@@ -31,7 +31,6 @@ import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.factory.AddTaskPresenterFactory;
 import io.blackbox_vision.helpers.logic.presenter.AddTaskPresenter;
 import io.blackbox_vision.helpers.logic.view.AddTaskView;
 import io.blackbox_vision.helpers.ui.activity.TaskListActivity;
@@ -190,7 +189,7 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
     @NonNull
     @Override
     protected PresenterFactory<AddTaskPresenter> createPresenterFactory() {
-        return AddTaskPresenterFactory.newInstance();
+        return () -> AddTaskPresenter.newInstance();
     }
 
     @LayoutRes
