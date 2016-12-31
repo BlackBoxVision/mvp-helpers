@@ -1,4 +1,7 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='io.blackbox-vision'
 
 android {
     compileSdkVersion 25

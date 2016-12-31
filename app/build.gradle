@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'me.tatarka.retrolambda'
-
-group='io.blackbox-vision'
 
 android {
     compileSdkVersion 25
