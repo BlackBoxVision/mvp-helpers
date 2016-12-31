@@ -1,12 +1,14 @@
-package io.blackbox_vision.mvphelpers.annotation;
-
+package io.blackbox_vision.mvphelpers.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.METHOD)
-public @interface Background {
+public @interface UIThread {
+
+    long delay() default 0L;
 }

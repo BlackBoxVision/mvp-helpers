@@ -46,7 +46,7 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
+    compile project(':mvphelpers')
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:cardview-v7:25.1.0'
