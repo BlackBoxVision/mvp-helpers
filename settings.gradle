@@ -1,1 +1,1 @@
-include ':app', ':mvphelpers', ':mvphelpers-annotations', ':mvphelpers-compiler'
+include ':sample', ':mvphelpers', ':mvphelpers-annotations', ':mvphelpers-compiler'
