@@ -1,5 +1,7 @@
 package io.blackbox_vision;
 
+import com.google.auto.service.AutoService;
+
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -8,6 +10,7 @@ import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
@@ -19,6 +22,7 @@ import io.blackbox_vision.mvphelpers.annotations.Schedule;
 import io.blackbox_vision.mvphelpers.annotations.UIThread;
 
 
+@AutoService(Processor.class)
 public final class MvpHelpersProcessor extends AbstractProcessor {
     private Elements elementUtils;
     private Messager messager;
@@ -57,7 +61,7 @@ public final class MvpHelpersProcessor extends AbstractProcessor {
     }
 
     private Set<Class<? extends Annotation>> getSupportedAnnotations() {
-        Set<Class<? extends Annotation>> annotations = new LinkedHashSet<>();
+        final Set<Class<? extends Annotation>> annotations = new LinkedHashSet<>();
 
         annotations.add(UIThread.class);
         annotations.add(Schedule.class);
