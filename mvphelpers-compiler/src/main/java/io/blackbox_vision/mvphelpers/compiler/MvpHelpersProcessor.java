@@ -1,4 +1,4 @@
-package io.blackbox_vision;
+package io.blackbox_vision.mvphelpers.compiler;
 
 import com.google.auto.service.AutoService;
 
