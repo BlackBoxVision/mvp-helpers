@@ -1,7 +1,7 @@
 <img src="https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/logo.png" width="425px" height="125px">
 > Helper classes to build Android Apps through MVP pattern in a faster way
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MVP%20Helpers-brightgreen.svg?style=flat)]() [![](https://jitpack.io/v/BlackBoxVision/mvp-helpers.svg)](https://jitpack.io/#BlackBoxVision/mvp-helpers) [![Build Status](https://travis-ci.org/BlackBoxVision/mvp-helpers.svg?branch=master)](https://travis-ci.org/BlackBoxVision/mvp-helpers)
+[![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MVP%20Helpers-brightgreen.svg?style=flat)]() [![](https://jitpack.io/v/BlackBoxVision/mvp-helpers.svg)](https://jitpack.io/#BlackBoxVision/mvp-helpers) [![Build Status](https://travis-ci.org/BlackBoxVision/mvp-helpers.svg?branch=master)](https://travis-ci.org/BlackBoxVision/mvp-helpers)
 
 ##Intro
 
