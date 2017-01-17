@@ -3,10 +3,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MVP%20Helpers-brightgreen.svg?style=flat)]() [![](https://jitpack.io/v/BlackBoxVision/mvp-helpers.svg)](https://jitpack.io/#BlackBoxVision/mvp-helpers) [![Build Status](https://travis-ci.org/BlackBoxVision/mvp-helpers.svg?branch=master)](https://travis-ci.org/BlackBoxVision/mvp-helpers)
 
-##Intro
-
-After working about 3 years with Android development, I learn a lot from the different projects I have made, a lot of mistakes, and a lot of lessons learned. About 1 year ago, or more, in Android, MVP become the selected pattern to make Android Apps. MVP makes your apps code more easier to follow, and also easier to reason. 
-
 **This library exposes a minimal API, that should help you to build well architected Android Apps. ¡Check the following steps to get up and running!**
 
 ##Installation
