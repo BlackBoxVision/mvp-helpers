@@ -119,7 +119,7 @@ public final class DetailsInteractor extends BaseInteractor {
 **3** - Create a **Presenter** class by extending the [**BasePresenter**](https://github.com/BlackBoxVision/mvp-helpers/blob/master/library/src/main/java/io/blackbox_vision/mvphelpers/logic/presenter/BasePresenter.java) class. The **BasePresenter** provides you with a set of helper methods to deal with **View** management. The methods are the following ones:
 
 - **isViewAttached** → check if you have set the view to the presenter, returns to you a boolean value that you should handle in your presenter implementation. 
-- **attachView** → add the view to the presenter, so you can start to handle the cicle of view - presenter - interactor interaction.
+- **attachView** → add the view to the presenter, so you can start to handle the cycle of view - presenter - interactor interaction.
 - **detachView** → dereference the view, setting it to null. This method should be called in the onDestroy method in case of use in Activity, and onDestroyView in case of Fragment usage. 
 - **getView** → simple getter, to make your access to the view defined more cleaner.
 - **onViewAttached** → callback fired when the view is attached to the presenter, it gives you the view so you can start doing something like restoring state, instantiating the interactors.  
@@ -178,7 +178,7 @@ class DetailsPresenterFactory implements PresenterFactory<DetailsPresenter> {
 
 The **BaseFragment** comes with a resumed lifecycle, and a set of methods to implement. The methods are the following ones:
 
-- **addPresenter** → in this method you have to create you instance of Presenter. 
+- **createPresenterFactory** → in this method you have to create an instance of PresenterFactory. 
 - **getLayout** → in this method you have pass the id reference to the layout. 
 - **getPresenter** → simple getter, to make your access to the presenter more cleaner.
 - **onPresenterCreated** → In this method you can start doing something with the presenter. **¡Now the View is attached automatically to the Presenter!**
