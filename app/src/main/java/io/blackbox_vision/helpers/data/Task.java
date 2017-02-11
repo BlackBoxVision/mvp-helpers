@@ -1,4 +1,4 @@
-package io.blackbox_vision.helpers.logic.model;
+package io.blackbox_vision.helpers.data;
 
 import com.orm.SugarRecord;
 

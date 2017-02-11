@@ -35,7 +35,7 @@ import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.helpers.data.Task;
 import io.blackbox_vision.helpers.logic.presenter.TaskListPresenter;
 import io.blackbox_vision.helpers.logic.presenter_view.TaskListView;
 import io.blackbox_vision.helpers.ui.activity.AddTaskActivity;
@@ -206,14 +206,15 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter, Task
     }
 
     @Override
-    protected void onPresenterCreated(@NonNull TaskListPresenter presenter) {
+    protected void onPresenterCreated(@NonNull TaskListPresenter presenter, @Nullable Bundle savedInstanceState) {
         presenter.getTasks();
     }
 
     @Override
-    protected void onPresenterDestroyed() {
+    protected void onPresenterStateSave(@NonNull TaskListPresenter presenter, @NonNull Bundle outState) { }
 
-    }
+    @Override
+    protected void onPresenterDestroyed() { }
 
     @OnClick(R.id.newTaskButton)
     public void onClick(@NonNull View v) {

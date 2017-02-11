@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.helpers.data.Task;
 import io.blackbox_vision.mvphelpers.logic.interactor.BaseInteractor;
 import io.blackbox_vision.mvphelpers.logic.listener.OnErrorListener;
 import io.blackbox_vision.mvphelpers.logic.listener.OnSuccessListener;

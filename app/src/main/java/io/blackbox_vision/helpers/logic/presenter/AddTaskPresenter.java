@@ -6,14 +6,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import io.blackbox_vision.helpers.helper.DateUtils;
-import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.helpers.data.Task;
 import io.blackbox_vision.helpers.logic.presenter_view.AddTaskView;
 import io.blackbox_vision.helpers.logic.interactor.AddTaskInteractor;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 
 public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
-    private static AddTaskPresenter addTaskPresenter = null;
     private AddTaskInteractor addTaskInteractor;
 
     private AddTaskPresenter() { }
@@ -135,10 +134,6 @@ public final class AddTaskPresenter extends BasePresenter<AddTaskView> {
     }
 
     public static AddTaskPresenter newInstance() {
-        if (null == addTaskPresenter) {
-            addTaskPresenter = new AddTaskPresenter();
-        }
-
-        return addTaskPresenter;
+        return new AddTaskPresenter();
     }
 }

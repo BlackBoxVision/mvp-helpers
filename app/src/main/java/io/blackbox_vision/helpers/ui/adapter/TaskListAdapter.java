@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import io.blackbox_vision.helpers.R;
-import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.helpers.data.Task;
 
 
 public final class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {

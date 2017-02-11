@@ -27,6 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import io.blackbox_vision.datetimepickeredittext.view.DatePickerInputEditText;
 import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
@@ -34,7 +35,6 @@ import io.blackbox_vision.helpers.logic.error.TaskException;
 import io.blackbox_vision.helpers.logic.presenter.AddTaskPresenter;
 import io.blackbox_vision.helpers.logic.presenter_view.AddTaskView;
 import io.blackbox_vision.helpers.ui.activity.TaskListActivity;
-import io.blackbox_vision.helpers.ui.custom.DatePickerEditText;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
 import io.blackbox_vision.mvphelpers.ui.fragment.BaseFragment;
 
@@ -59,13 +59,13 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
     TextInputLayout startDateInputLayout;
 
     @BindView(R.id.startDateEditText)
-    DatePickerEditText startDateEditText;
+    DatePickerInputEditText startDateEditText;
 
     @BindView(R.id.dueDateInputLayout)
     TextInputLayout dueDateInputLayout;
 
     @BindView(R.id.dueDateEditText)
-    DatePickerEditText dueDateEditText;
+    DatePickerInputEditText dueDateEditText;
 
     @BindView(R.id.taskButton)
     Button taskButton;
@@ -96,8 +96,8 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
         startDateEditText.setManager(getFragmentManager());
         dueDateEditText.setManager(getFragmentManager());
 
-        startDateEditText.setFocusChangeListener(this::onFocusChange);
-        dueDateEditText.setFocusChangeListener(this::onFocusChange);
+        startDateEditText.setOnFocusChangedListener(this::onFocusChange);
+        dueDateEditText.setOnFocusChangedListener(this::onFocusChange);
     }
 
     @Override
@@ -199,13 +199,16 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
     }
 
     @Override
-    protected void onPresenterCreated(@NonNull AddTaskPresenter presenter) {
+    protected void onPresenterCreated(@NonNull AddTaskPresenter presenter, @Nullable Bundle savedInstanceState) {
         presenter.findLaunchMode();
 
         if (taskId != -1L) {
             presenter.findTaskById(taskId);
         }
     }
+
+    @Override
+    protected void onPresenterStateSave(@NonNull AddTaskPresenter presenter, @NonNull Bundle outState) {}
 
     @Override
     protected void onPresenterDestroyed() { }

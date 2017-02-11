@@ -59,13 +59,16 @@
             android:layout_marginBottom="8dp"
             android:layout_below="@id/descriptionInputLayout">
 
-            <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
+            <io.blackbox_vision.datetimepickeredittext.view.DatePickerInputEditText
                 android:id="@+id/startDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:textIsSelectable="true"
-                android:hint="@string/start_date" />
+                android:hint="@string/start_date"
+                app:minDate="01/01/1981"
+                app:maxDate="01/01/2050"
+                app:dateFormat="dd/MM/yyyy"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -76,13 +79,16 @@
             android:layout_marginBottom="8dp"
             android:layout_below="@id/startDateInputLayout">
 
-            <io.blackbox_vision.helpers.ui.custom.DatePickerEditText
+            <io.blackbox_vision.datetimepickeredittext.view.DatePickerInputEditText
                 android:id="@+id/dueDateEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:textIsSelectable="true"
-                android:hint="@string/due_date" />
+                android:hint="@string/due_date"
+                app:minDate="01/01/1981"
+                app:maxDate="01/01/2050"
+                app:dateFormat="dd/MM/yyyy"/>
 
         </android.support.design.widget.TextInputLayout>
 

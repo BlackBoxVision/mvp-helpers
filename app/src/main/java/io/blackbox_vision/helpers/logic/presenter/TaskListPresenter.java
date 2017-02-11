@@ -5,13 +5,12 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import io.blackbox_vision.helpers.logic.interactor.TaskListInteractor;
-import io.blackbox_vision.helpers.logic.model.Task;
+import io.blackbox_vision.helpers.data.Task;
 import io.blackbox_vision.helpers.logic.presenter_view.TaskListView;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 
 public final class TaskListPresenter extends BasePresenter<TaskListView> {
-    private static TaskListPresenter taskListPresenter = null;
     private TaskListInteractor taskListInteractor;
 
     private TaskListPresenter() { }
@@ -99,10 +98,6 @@ public final class TaskListPresenter extends BasePresenter<TaskListView> {
     }
 
     public static TaskListPresenter newInstance() {
-        if (null == taskListPresenter) {
-            taskListPresenter = new TaskListPresenter();
-        }
-
-        return taskListPresenter;
+        return new TaskListPresenter();
     }
 }

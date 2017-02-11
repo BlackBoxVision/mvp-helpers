@@ -25,7 +25,7 @@
         <meta-data android:name="DATABASE" android:value="tasks.db" />
         <meta-data android:name="VERSION" android:value="1" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="io.blackbox_vision.helpers.logic.model" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="io.blackbox_vision.helpers.data" />
     </application>
 
 </manifest>
