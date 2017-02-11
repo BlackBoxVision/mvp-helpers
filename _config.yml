@@ -2,7 +2,7 @@ title: Mvp-helpers
 description: Helper classes to build Android Apps through MVP pattern in a faster way
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-architect
+theme: jekyll-theme-dinky
 
 gems:
   - jekyll-mentions
