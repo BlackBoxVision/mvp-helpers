@@ -16,7 +16,7 @@ import io.blackbox_vision.mvphelpers.ui.loader.PresenterLoader;
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 
-public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseView> extends AppCompatActivity implements LoaderCallbacks<P> {
+public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseView> extends AppCompatActivity {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
 
@@ -29,35 +29,48 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseVie
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
 
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, new LoaderCallbacks<P>() {
+            @Override
+            public Loader<P> onCreateLoader(int id, Bundle args) {
+                return PresenterLoader.newInstance(getApplicationContext(), createPresenterFactory());
+            }
+
+            @Override
+            public void onLoadFinished(Loader<P> loader, P basePresenter) {
+                final V presenterView = getPresenterView();
+                presenter = basePresenter;
+
+                if (null != presenterView) {
+                    presenter.attachView(presenterView);
+                } else {
+                    Log.d(TAG, "View can't be attached because you don't implement it in your activity.");
+                }
+
+                onPresenterCreated(presenter);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<P> loader) {
+                if (isPresenterAvailable()) {
+                    presenter.detachView();
+                    presenter = null;
+                }
+
+                onPresenterDestroyed();
+            }
+        });
     }
 
     @Override
-    public Loader<P> onCreateLoader(int id, Bundle args) {
-        return PresenterLoader.newInstance(getApplicationContext(), createPresenterFactory());
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        onPresenterStateRestore(presenter, savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
-    public void onLoadFinished(Loader<P> loader, P basePresenter) {
-        presenter = basePresenter;
-
-        if (null != getPresenterView()) {
-            presenter.attachView(getPresenterView());
-        } else {
-            Log.d(TAG, "View can't be attached because you don't implement it in your activity.");
-        }
-
-        onPresenterCreated(this.presenter);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<P> loader) {
-        if (isPresenterAvailable()) {
-            presenter.detachView();
-            presenter = null;
-        }
-
-        onPresenterDestroyed();
+    protected void onSaveInstanceState(Bundle outState) {
+        onPresenterStateSave(presenter, outState);
+        super.onSaveInstanceState(outState);
     }
 
     @NonNull
@@ -67,6 +80,10 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseVie
     protected abstract int getLayout();
 
     protected abstract void onPresenterCreated(@NonNull P presenter);
+
+    protected abstract void onPresenterStateRestore(@NonNull final P presenter, @Nullable final Bundle savedInstanceState);
+
+    protected abstract void onPresenterStateSave(@NonNull final P presenter, @NonNull final Bundle outState);
 
     protected abstract void onPresenterDestroyed();
 
@@ -78,6 +95,7 @@ public abstract class BaseActivity<P extends BasePresenter<V>, V extends BaseVie
         return presenter != null;
     }
 
+    @SuppressWarnings("all")
     protected V getPresenterView() {
         V view = null;
 
