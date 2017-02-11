@@ -7,7 +7,7 @@ import java.util.Date;
 
 import io.blackbox_vision.helpers.helper.DateUtils;
 import io.blackbox_vision.helpers.logic.model.Task;
-import io.blackbox_vision.helpers.logic.view.AddTaskView;
+import io.blackbox_vision.helpers.logic.presenter_view.AddTaskView;
 import io.blackbox_vision.helpers.logic.interactor.AddTaskInteractor;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 

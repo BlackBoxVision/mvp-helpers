@@ -31,9 +31,8 @@ import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.factory.AddTaskPresenterFactory;
 import io.blackbox_vision.helpers.logic.presenter.AddTaskPresenter;
-import io.blackbox_vision.helpers.logic.view.AddTaskView;
+import io.blackbox_vision.helpers.logic.presenter_view.AddTaskView;
 import io.blackbox_vision.helpers.ui.activity.TaskListActivity;
 import io.blackbox_vision.helpers.ui.custom.DatePickerEditText;
 import io.blackbox_vision.mvphelpers.logic.factory.PresenterFactory;
@@ -190,7 +189,7 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
     @NonNull
     @Override
     protected PresenterFactory<AddTaskPresenter> createPresenterFactory() {
-        return AddTaskPresenterFactory.newInstance();
+        return this::createPresenter;
     }
 
     @LayoutRes
@@ -209,9 +208,7 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
     }
 
     @Override
-    protected void onPresenterDestroyed() {
-
-    }
+    protected void onPresenterDestroyed() { }
 
     @Override
     public Long getTaskId() {
@@ -315,5 +312,9 @@ public final class AddTaskFragment extends BaseFragment<AddTaskPresenter, AddTas
         }
 
         Snackbar.make(taskButton, messageId, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private AddTaskPresenter createPresenter() {
+        return AddTaskPresenter.newInstance();
     }
 }

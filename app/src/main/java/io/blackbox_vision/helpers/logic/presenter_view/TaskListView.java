@@ -1,4 +1,4 @@
-package io.blackbox_vision.helpers.logic.view;
+package io.blackbox_vision.helpers.logic.presenter_view;
 
 import android.support.annotation.NonNull;
 

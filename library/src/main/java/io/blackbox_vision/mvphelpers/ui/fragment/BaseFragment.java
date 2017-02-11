@@ -20,7 +20,7 @@ import io.blackbox_vision.mvphelpers.ui.loader.PresenterLoader;
 import static android.support.v4.app.LoaderManager.LoaderCallbacks;
 
 
-public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseView> extends Fragment implements LoaderCallbacks<P> {
+public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseView> extends Fragment {
 
     private static final String TAG = BaseFragment.class.getSimpleName();
 
@@ -35,38 +35,45 @@ public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseVie
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(LOADER_ID, null, new LoaderCallbacks<P>() {
+            @Override
+            public Loader<P> onCreateLoader(int id, Bundle args) {
+                return PresenterLoader.newInstance(getContext(), createPresenterFactory());
+            }
+
+            @Override
+            public void onLoadFinished(Loader<P> loader, P basePresenter) {
+                final V presenterView = getPresenterView();
+                presenter = basePresenter;
+
+                if (null != presenterView) {
+                    presenter.attachView(presenterView);
+                } else {
+                    Log.d(TAG, "View can't be attached because you don't implement it in your fragment.");
+                }
+
+                onPresenterCreated(presenter, savedInstanceState);
+            }
+
+            @Override
+            public void onLoaderReset(Loader<P> loader) {
+                if (isPresenterAvailable()) {
+                    presenter.detachView();
+                    presenter = null;
+                }
+
+                onPresenterDestroyed();
+            }
+        });
     }
 
     @Override
-    public Loader<P> onCreateLoader(int id, Bundle args) {
-        return PresenterLoader.newInstance(getContext(), createPresenterFactory());
-    }
-
-    @Override
-    public void onLoadFinished(Loader<P> loader, P basePresenter) {
-        presenter = basePresenter;
-
-        if (null != getPresenterView()) {
-            presenter.attachView(getPresenterView());
-        } else {
-            Log.d(TAG, "View can't be attached because you don't implement it in your fragment.");
-        }
-
-        onPresenterCreated(presenter);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<P> loader) {
-        if (isPresenterAvailable()) {
-            presenter.detachView();
-            presenter = null;
-        }
-
-        onPresenterDestroyed();
+    public void onSaveInstanceState(Bundle outState) {
+        onPresenterStateSave(presenter, outState);
+        super.onSaveInstanceState(outState);
     }
 
     @NonNull
@@ -75,7 +82,9 @@ public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseVie
     @LayoutRes
     protected abstract int getLayout();
 
-    protected abstract void onPresenterCreated(@NonNull P presenter);
+    protected abstract void onPresenterCreated(@NonNull final P presenter, @Nullable final Bundle savedInstanceState);
+
+    protected abstract void onPresenterStateSave(@NonNull final P presenter, @NonNull final Bundle outState);
 
     protected abstract void onPresenterDestroyed();
 
@@ -87,6 +96,7 @@ public abstract class BaseFragment<P extends BasePresenter<V>, V extends BaseVie
         return presenter != null;
     }
 
+    @SuppressWarnings("all")
     protected V getPresenterView() {
         V view = null;
 

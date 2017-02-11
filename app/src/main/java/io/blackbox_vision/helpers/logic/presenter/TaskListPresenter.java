@@ -6,7 +6,7 @@ import java.util.List;
 
 import io.blackbox_vision.helpers.logic.interactor.TaskListInteractor;
 import io.blackbox_vision.helpers.logic.model.Task;
-import io.blackbox_vision.helpers.logic.view.TaskListView;
+import io.blackbox_vision.helpers.logic.presenter_view.TaskListView;
 import io.blackbox_vision.mvphelpers.logic.presenter.BasePresenter;
 
 

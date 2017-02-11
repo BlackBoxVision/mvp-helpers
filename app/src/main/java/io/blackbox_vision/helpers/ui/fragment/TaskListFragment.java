@@ -35,10 +35,9 @@ import io.blackbox_vision.helpers.R;
 import io.blackbox_vision.helpers.helper.AppConstants;
 import io.blackbox_vision.helpers.helper.DrawableUtils;
 import io.blackbox_vision.helpers.logic.error.TaskException;
-import io.blackbox_vision.helpers.logic.factory.TaskListPresenterFactory;
 import io.blackbox_vision.helpers.logic.model.Task;
 import io.blackbox_vision.helpers.logic.presenter.TaskListPresenter;
-import io.blackbox_vision.helpers.logic.view.TaskListView;
+import io.blackbox_vision.helpers.logic.presenter_view.TaskListView;
 import io.blackbox_vision.helpers.ui.activity.AddTaskActivity;
 import io.blackbox_vision.helpers.ui.adapter.TaskListAdapter;
 import io.blackbox_vision.helpers.ui.behavior.RecyclerViewScrollBehavior;
@@ -198,7 +197,7 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter, Task
     @NonNull
     @Override
     protected PresenterFactory<TaskListPresenter> createPresenterFactory() {
-        return TaskListPresenterFactory.newInstance();
+        return this::createPresenter;
     }
 
     @Override
@@ -311,5 +310,9 @@ public final class TaskListFragment extends BaseFragment<TaskListPresenter, Task
         errorTextView.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
         errorTextView.setText(getString(R.string.empty_task_list));
         errorTextView.setTextSize(16F);
+    }
+
+    private TaskListPresenter createPresenter() {
+        return TaskListPresenter.newInstance();
     }
 }
