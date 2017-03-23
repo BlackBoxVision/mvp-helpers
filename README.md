@@ -5,7 +5,7 @@
 
 **This library exposes a minimal API, that should help you to build well architected Android Apps. ¡Check the following steps to get up and running!**
 
-##Installation
+## Installation
 
 Actually I don't have this library in **JCenter/Maven Central**, so if you want to use, follow the instructions. The library is distributed for Java and Kotlin. Looking for Kotlin variant? [Go here](https://github.com/BlackBoxVision/mvp-helpers/tree/kotlin)
 
@@ -62,7 +62,7 @@ dependencies {
   libraryDependencies += "com.github.BlackBoxVision" % "mvp-helpers" % "v0.2.0"	
 ```
 
-##Core Concepts
+## Core Concepts
 
 The concepts behind this library are the following ones: 
 - **View** → The **View** is an interface that contains methods related to UI interaction. Those methods should be implemented in your **Activity, Fragment or View**.
@@ -73,7 +73,7 @@ The concepts behind this library are the following ones:
 
 ![](https://github.com/BlackBoxVision/mvp-helpers/blob/master/art/mvp-helpers-architecture.png)
 
-##Usage example
+## Usage example
 
 The usage is really simple: 
 
@@ -221,19 +221,19 @@ public final class DetailsFragment extends BaseFragment<DetailsPresenter, Detail
 } 
 ```
 
-##Advise about ButterKnife
+## Advise about ButterKnife
 
 From version **0.2.0 of this library**, I have decided to remove butterKnife, in order to not force any dev to use butterKnife. 
 
-##Issues 
+## Issues 
 
 If you found a bug, or you have an answer, or whatever. Please, open an [issue](https://github.com/BlackBoxVision/mvp-helpers/issues). I will do the best to fix it, or help you. 
 
-##Contributing
+## Contributing
 
 Of course, if you see something that you want to upgrade from this library, or a bug that needs to be solved, **PRs are welcome!**
 
-##Release History
+## Release History
 
 * **0.2.0**
   * **CHANGE**: **BasePresenter** has now two new callbacks, to be notified about **view attachment/detachment**. 
@@ -255,6 +255,6 @@ Of course, if you see something that you want to upgrade from this library, or a
 * **0.0.1**
   * Work in progress
 
-##License
+## License
 
 Distributed under the **MIT license**. See [LICENSE](https://github.com/BlackBoxVision/mvp-helpers/blob/master/LICENSE) for more information.
