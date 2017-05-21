@@ -1,5 +1,6 @@
 package io.blackbox_vision.mvphelpers.utils.bugfix;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.os.UserManager;
@@ -20,6 +21,7 @@ public final class UserManagerLeaks {
      *
      * @param app - the Application instance where UserManager.get() will be triggered
      */
+    @TargetApi(17)
     public static void fixLeakInGetMethod(Application app) {
         try {
             final Method m = UserManager.class.getMethod(GET_METHOD, Context.class);

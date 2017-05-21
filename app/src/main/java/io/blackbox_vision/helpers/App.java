@@ -16,7 +16,7 @@ public final class App extends SugarApp {
         super.onCreate();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            IMMLeaks.fixAllPosiblyFocusedViewLeaks(this);
+            IMMLeaks.fixAllPossiblyFocusedViewLeaks(this);
         }
 
         UserManagerLeaks.fixLeakInGetMethod(this);

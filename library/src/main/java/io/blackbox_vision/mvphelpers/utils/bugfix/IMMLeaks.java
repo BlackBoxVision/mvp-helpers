@@ -49,8 +49,7 @@ public final class IMMLeaks {
         private final Field mServedViewField;
         private final Method finishInputLockedMethod;
 
-        ReferenceCleaner(InputMethodManager inputMethodManager, Field mHField, Field mServedViewField,
-                         Method finishInputLockedMethod) {
+        ReferenceCleaner(InputMethodManager inputMethodManager, Field mHField, Field mServedViewField, Method finishInputLockedMethod) {
             this.inputMethodManager = inputMethodManager;
             this.mHField = mHField;
             this.mServedViewField = mServedViewField;
@@ -202,7 +201,7 @@ public final class IMMLeaks {
      *
      * @param application
      */
-    public static void fixAllPosiblyFocusedViewLeaks(Application application) {
+    public static void fixAllPossiblyFocusedViewLeaks(Application application) {
         for (int i = 0; i < LEAKED_VIEWS.length; i++) {
             fixFocusedViewLeak(application, LEAKED_VIEWS[i]);
         }
